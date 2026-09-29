@@ -15,6 +15,13 @@ test('six approved cases expose every original and A/B/C pair', () => {
   for (const study of cases) {
     assert.deepEqual(study.variants.map(variant => variant.id), ['a', 'b', 'c']);
     assert.ok(study.whatChanged && study.why);
+    assert.equal(study.original.issues?.length, 3, `${study.id} needs three original critiques`);
+    for (const issue of study.original.issues) {
+      assert.ok(issue.label && issue.detail);
+      for (const point of [issue.arrow.origin, issue.arrow.bend, issue.arrow.target]) {
+        assert.ok(point[0] >= 0 && point[0] <= 1280 && point[1] >= 0 && point[1] <= 720, `${study.id} has an off-image critique arrow`);
+      }
+    }
   }
 });
 

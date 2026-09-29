@@ -42,17 +42,28 @@ function renderVariant(variant, number) {
 function renderOriginal(study) {
   const original = study.original;
   const annotated = Boolean(original.issues);
-  const arrows = annotated ? `<svg class="original-audit-arrows" viewBox="0 0 1280 720" fill="none" aria-hidden="true" focusable="false">
-    <g class="audit-arrow" data-issue-arrow="1"><path d="M4 276C72 277 106 250 176 207"/><path d="m147 213 29-6-17 26"/></g>
-    <g class="audit-arrow" data-issue-arrow="2"><path d="M555 495C590 488 626 464 670 429"/><path d="m635 433 35-4-18 31"/></g>
-    <g class="audit-arrow" data-issue-arrow="3"><path d="M540 714C605 705 653 682 708 648"/><path d="m678 650 30-2-17 25"/></g>
-  </svg>` : '';
+  const arrows = original.issues ? `<svg class="original-audit-arrows" viewBox="0 0 1280 720" fill="none" aria-hidden="true" focusable="false">${original.issues.map((issue, index) => {
+    const [ox, oy] = issue.arrow.origin;
+    const [bx, by] = issue.arrow.bend;
+    const [tx, ty] = issue.arrow.target;
+    const length = Math.hypot(tx - ox, ty - oy);
+    const startX = ox + (tx - ox) * 47 / length;
+    const startY = oy + (ty - oy) * 47 / length;
+    const tangent = Math.hypot(tx - bx, ty - by);
+    const ux = (tx - bx) / tangent;
+    const uy = (ty - by) / tangent;
+    const leftX = tx - ux * 37 - uy * 22;
+    const leftY = ty - uy * 37 + ux * 22;
+    const rightX = tx - ux * 37 + uy * 22;
+    const rightY = ty - uy * 37 - ux * 22;
+    return `<g class="audit-arrow" data-issue-arrow="${index + 1}"><path class="audit-line" d="M${startX} ${startY} Q${bx} ${by} ${tx} ${ty}"/><path class="audit-line" d="M${leftX} ${leftY} ${tx} ${ty} ${rightX} ${rightY}"/><circle class="audit-marker" cx="${ox}" cy="${oy}" r="43"/><text class="audit-number" x="${ox}" y="${oy}">${index + 1}</text></g>`;
+  }).join('')}</svg>` : '';
   const issues = original.issues ? `<ol class="original-issues" aria-label="Three issues in the captured original">${original.issues.map((issue, index) => `<li><span class="issue-number" aria-hidden="true">0${index + 1}</span><div><strong>${text(issue.label)}</strong><p>${text(issue.detail)}</p></div></li>`).join('')}</ol>` : '';
   const image = `<div class="image-frame${annotated ? ' original-audit-image' : ''}"><img src="${attribute(original.image)}" alt="${attribute(original.alt)}" width="1280" height="720" loading="lazy" decoding="async">${arrows}</div>`;
   return `<article class="pair-card original${annotated ? ' annotated-original' : ''}">
-    ${annotated ? '' : '<div class="original-spacer" aria-hidden="true"><span>the starting point</span></div>'}
-    <figure${annotated ? ' class="original-audit-figure"' : ''}>${image}<figcaption><div class="pair-eyebrow"><span class="pair-label">ORIGINAL</span><span>Captured source</span></div><h4>${text(original.title)}</h4>${original.note ? `<p class="title-note">${text(original.note)}</p>` : ''}${issues}</figcaption></figure>
-    <div class="pair-reason original-caption"><span class="angle">Published source video</span><p>The original is shown as captured for comparison. The redesigns are independent proposals.</p></div>
+    <div class="original-spacer" aria-hidden="true"><span>${annotated ? '3 things to fix' : 'the starting point'}</span></div>
+    <figure>${image}<figcaption><div class="pair-eyebrow"><span class="pair-label">ORIGINAL</span><span>Captured source</span></div><h4>${text(original.title)}</h4>${original.note ? `<p class="title-note">${text(original.note)}</p>` : ''}</figcaption></figure>
+    <div class="pair-reason original-caption">${annotated ? `<span class="angle">Three issues in the original</span>${issues}` : '<span class="angle">Published source video</span><p>The original is shown as captured for comparison. The redesigns are independent proposals.</p>'}</div>
   </article>`;
 }
 

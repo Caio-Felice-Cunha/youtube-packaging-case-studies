@@ -4,7 +4,7 @@
  *   revision: string, angle: string, annotation: string,
  *   change: string, reason: string, arrowSide: 'left' | 'right'
  * }} Variant
- * @typedef {{ label: string, detail: string }} OriginalIssue
+ * @typedef {{ label: string, detail: string, arrow: { origin: [number, number], bend: [number, number], target: [number, number] } }} OriginalIssue
  * @typedef {{
  *   id: string, channel: string, topic: string, videoUrl: string,
  *   original: { title: string, image: string, alt: string, note?: string, issues?: OriginalIssue[] },
@@ -23,7 +23,12 @@ export const cases = [
     original: {
       title: '7 Plataformas para você conquistar sua Job Offer estando no Brasil',
       image: './assets/cases/seven-platforms/original.webp',
-      alt: 'Original seven-platform thumbnail with the presenter and job-search theme.'
+      alt: 'Original thumbnail with the presenter, a 7 CAMINHOS PARA JOB OFFER headline, and a Canada flag.',
+      issues: [
+        { label: 'A broad promise', detail: '“7 CAMINHOS” is broader than the seven platforms in the video.', arrow: { origin: [1210, 290], bend: [1150, 255], target: [1080, 220] } },
+        { label: 'No first action', detail: '“JOB OFFER” names the goal without showing a search route.', arrow: { origin: [1220, 445], bend: [1160, 430], target: [1050, 410] } },
+        { label: 'A generic cue', detail: 'The flag takes space that could show a platform or job search.', arrow: { origin: [1200, 650], bend: [1150, 620], target: [1030, 570] } }
+      ]
     },
     whatChanged: 'The broad job-offer promise became three different entry points: a hidden list, the cost of waiting for a recruitment mission, and experience that can start before moving.',
     why: 'The video presents seven platforms and distinguishes remote work, in-person opportunities, and career experience. Each direction uses a different supported part of that discussion.',
@@ -70,7 +75,12 @@ export const cases = [
       title: 'How to format your resume for the CANADIAN standard.',
       image: './assets/cases/canadian-resume/original.webp',
       alt: 'Captured original résumé thumbnail with the presenter and CURRÍCULO CANADENSE text.',
-      note: 'Localized title captured at the source snapshot; the original Portuguese wording was not verified.'
+      note: 'Localized title captured at the source snapshot; the original Portuguese wording was not verified.',
+      issues: [
+        { label: 'Only the topic', detail: '“CURRÍCULO CANADENSE” does not name any of the five mistakes.', arrow: { origin: [1220, 335], bend: [1150, 320], target: [1040, 305] } },
+        { label: 'A flag, not a résumé', detail: 'The flag repeats Canada without showing the document at issue.', arrow: { origin: [1200, 535], bend: [1120, 510], target: [1020, 470] } },
+        { label: 'Unrelated backdrop', detail: 'The street scene adds no visible format, wording, or vacancy cue.', arrow: { origin: [1165, 675], bend: [1160, 650], target: [1110, 615] } }
+      ]
     },
     whatChanged: 'The general résumé topic became three concrete problems: an overlong document, literal translation, and a résumé that fails to match a vacancy.',
     why: 'The video discusses five mistakes, including length, translation and wording, and tailoring to a job. The designs make one of those ideas visible at a time.',
@@ -115,7 +125,12 @@ export const cases = [
     original: {
       title: 'COMPREI UM CARRO NO CANADÁ… MAS NÃO ESPERAVA ESSES GASTOS!',
       image: './assets/cases/first-car/original.webp',
-      alt: 'Captured original first-car thumbnail with the presenter and car-cost theme.'
+      alt: 'Captured original first-car thumbnail with a broad cost headline, six question-mark expense rows, and an É MUITO CARO? tag.',
+      issues: [
+        { label: 'A broad headline', detail: 'The large cost question hides the specific first-car surprise.', arrow: { origin: [790, 65], bend: [755, 130], target: [690, 190] } },
+        { label: 'Too many questions', detail: 'Six expense rows with question marks compete for attention.', arrow: { origin: [905, 70], bend: [945, 160], target: [1020, 270] } },
+        { label: 'A second hook', detail: '“É MUITO CARO?” repeats the question instead of adding an answer.', arrow: { origin: [520, 665], bend: [465, 655], target: [380, 625] } }
+      ]
     },
     whatChanged: 'A broad surprise about car costs became a precise annual insurance figure, a purchase-to-cost story, and an insurer-comparison decision.',
     why: 'The creator recounts buying a first car, calling several insurers, and paying roughly CAD 2,800–2,900 for the year. Each pair emphasizes a different part of that experience.',
@@ -160,7 +175,12 @@ export const cases = [
     original: {
       title: 'Eu faria tudo isso DIFERENTE se viesse pro Canadá hoje…',
       image: './assets/cases/starting-over/original.webp',
-      alt: 'Captured original starting-over thumbnail with the presenter and multiple advice points.'
+      alt: 'Captured original thumbnail with ERROS QUE EU COMETI, a dense lower-left checklist, and NÃO FAÇA ISSO text.',
+      issues: [
+        { label: 'A broad warning', detail: '“ERROS” is loud but does not identify the four decisions.', arrow: { origin: [640, 460], bend: [670, 300], target: [620, 175] } },
+        { label: 'A crowded list', detail: 'The small checklist asks viewers to read too many topics at once.', arrow: { origin: [345, 460], bend: [315, 510], target: [250, 560] } },
+        { label: 'Another vague command', detail: '“NÃO FAÇA ISSO!” adds a second message without naming an action.', arrow: { origin: [1055, 270], bend: [1105, 220], target: [1170, 170] } }
+      ]
     },
     whatChanged: 'A crowded list of things to do differently became three cleaner ways into the same personal story: warning, hindsight, and a constructive reset.',
     why: 'The video names four decisions the presenter would change. The alternatives keep that first-person perspective while changing how quickly the viewer understands the promise.',
@@ -209,15 +229,18 @@ export const cases = [
       issues: [
         {
           label: 'The wrong lead',
-          detail: 'Orlando leads, but this video is about Tampa’s 18 changes.'
+          detail: 'Orlando leads, but this video is about Tampa’s 18 changes.',
+          arrow: { origin: [62, 280], bend: [150, 245], target: [185, 208] }
         },
         {
           label: 'A hidden key word',
-          detail: '“CONHEÇA” is partly covered by the presenters.'
+          detail: '“CONHEÇA” is partly covered by the presenters.',
+          arrow: { origin: [550, 490], bend: [650, 452], target: [680, 427] }
         },
         {
           label: 'The missed hook',
-          detail: '“TAMPA 2026” dominates while the 18-change hook is missing.'
+          detail: '“TAMPA 2026” dominates while the 18-change hook is missing.',
+          arrow: { origin: [524, 677], bend: [662, 658], target: [708, 648] }
         }
       ]
     },
@@ -265,7 +288,12 @@ export const cases = [
     original: {
       title: 'PRAZO FINAL 15 DE OUTUBRO: DECLARAÇÃO DE IMPOSTOS NOS EUA — VOCÊ ESTÁ PREPARADO?',
       image: './assets/cases/two-countries/original.webp',
-      alt: 'Captured original deadline-led US tax thumbnail with Emerson.'
+      alt: 'Captured original deadline-led tax thumbnail with Emerson, outlined ATENÇÃO, red PRAZO, and a large OUT.15 date.',
+      issues: [
+        { label: 'A vague alarm', detail: '“ATENÇÃO” is large but does not say what viewers will learn.', arrow: { origin: [95, 320], bend: [140, 260], target: [220, 190] } },
+        { label: 'Urgency leads', detail: '“PRAZO” foregrounds a deadline over the two-country discussion.', arrow: { origin: [90, 465], bend: [180, 440], target: [275, 415] } },
+        { label: 'Date without context', detail: '“OUT.15” dominates without explaining the deadline in the image.', arrow: { origin: [1170, 660], bend: [1100, 630], target: [1000, 600] } }
+      ]
     },
     whatChanged: 'The deadline-led original became three questions about attention across Brazil and the US, the reported request for one place to ask, and coordination between the two sides.',
     why: 'The presenter describes a client request for simpler support across both countries. The redesigns frame that discussion as questions, not proof of completed service coverage.',
