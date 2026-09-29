@@ -10,7 +10,7 @@ test('all cases, title pairs, images and links load from a project subpath', asy
   await expect(page.locator('.pair-card')).toHaveCount(24);
   await expect(page.locator('.pair-card.redesign')).toHaveCount(18);
   await expect(page.locator('.video-link')).toHaveCount(6);
-  await expect(page.locator('a[href="mailto:caiofcunha@hotmail.com"]')).toHaveCount(2);
+  await expect(page.locator('a[href="mailto:caiofcunha@hotmail.com"]')).toHaveCount(3);
   await expect(page.getByText('Localized title captured at the source snapshot')).toBeVisible();
   for (const image of await page.locator('.pair-card img').all()) {
     await image.scrollIntoViewIfNeeded();
@@ -19,6 +19,32 @@ test('all cases, title pairs, images and links load from a project subpath', asy
     expect(await image.getAttribute('alt')).toBeTruthy();
   }
   expect(failed).toEqual([]);
+});
+
+test('buyer-led hero has purposeful work and contact actions', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('#hero-title')).toHaveText('A strong video can still get skipped.');
+  await expect(page.locator('.hero-bottom')).toContainText('viewers may scroll past');
+  await expect(page.locator('.hero-bottom')).toContainText('I study your video');
+  await expect(page.getByRole('link', { name: 'See the redesigns' })).toHaveAttribute('href', '#case-studies');
+  await expect(page.getByRole('link', { name: 'Talk about your video' })).toHaveAttribute('href', 'mailto:caiofcunha@hotmail.com');
+  await expect(page.locator('.hero-scribble, .intro-band, #approach')).toHaveCount(0);
+  await expect(page.locator('a[href="#approach"]')).toHaveCount(0);
+  await expect(page.locator('.work-heading')).toContainText('I study the source video');
+  await expect(page.locator('.work-disclosure')).toContainText('not uploaded, live-tested, or endorsed');
+  await expect(page.locator('.site-header nav a[href="#work"]')).toHaveCount(1);
+  await expect(page.locator('.skip-link')).toHaveAttribute('href', '#work');
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect(page.getByRole('link', { name: 'See the redesigns' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Talk about your video' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'The work', exact: true })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    await page.getByRole('link', { name: 'See the redesigns' }).click();
+    await expect(page).toHaveURL(/#case-studies$/);
+    await expect(page.locator('#case-studies')).toBeInViewport();
+    await expect(page.locator('.case-study').first()).toBeInViewport();
+  }
 });
 
 test('navigation, keyboard skip link and responsive layout work', async ({ page }, testInfo) => {
