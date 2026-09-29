@@ -1,0 +1,20 @@
+{
+  "name": "youtube-packaging-case-studies",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "node --check src/cases.mjs && node --check scripts/build.mjs && node --check scripts/lint.mjs && node scripts/lint.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/data.test.mjs && npm run build && playwright test",
+    "test:e2e": "playwright test",
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}
