@@ -35,6 +35,28 @@ test('navigation, keyboard skip link and responsive layout work', async ({ page 
   }
 });
 
+test('Tampa uses the selected pairings and keeps three original critiques visible on small screens', async ({ page }) => {
+  await page.goto('./#tampa-future');
+  const tampa = page.locator('#tampa-future');
+  await expect(tampa.locator('.pair-card h4')).toHaveText([
+    'Tampa está mudando: 18 novidades que você precisa conhecer',
+    'Você moraria em Tampa Bay sem conhecer estas 18 mudanças?',
+    'Tampa Bay está crescendo — mas como fica a vida de quem mora lá?',
+    '18 mudanças em Tampa Bay: o que existe além dos novos prédios?'
+  ]);
+  await expect(tampa.locator('.original-audit-arrows .audit-arrow')).toHaveCount(3);
+  await expect(tampa.locator('.original-issues li')).toHaveCount(3);
+  await expect(tampa.locator('.case-caveat')).toContainText('AI-treated portraits whose likeness has not been verified');
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect(tampa.locator('.original-audit-arrows')).toBeVisible();
+    await expect(tampa.locator('.original-issues li')).toHaveCount(3);
+    for (const item of await tampa.locator('.original-issues li').all()) await expect(item).toBeVisible();
+    const documentWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+    expect(documentWidth, `horizontal overflow at ${width}px`).toBeLessThanOrEqual(width);
+  }
+});
+
 test('reduced motion avoids smooth scrolling', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('./');

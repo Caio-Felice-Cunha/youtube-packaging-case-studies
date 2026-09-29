@@ -4,9 +4,10 @@
  *   revision: string, angle: string, annotation: string,
  *   change: string, reason: string, arrowSide: 'left' | 'right'
  * }} Variant
+ * @typedef {{ label: string, detail: string }} OriginalIssue
  * @typedef {{
  *   id: string, channel: string, topic: string, videoUrl: string,
- *   original: { title: string, image: string, alt: string, note?: string },
+ *   original: { title: string, image: string, alt: string, note?: string, issues?: OriginalIssue[] },
  *   whatChanged: string, why: string, variants: Variant[],
  *   caveat?: string
  * }} CaseStudy
@@ -204,43 +205,57 @@ export const cases = [
     original: {
       title: 'Tampa está mudando: 18 novidades que você precisa conhecer',
       image: './assets/cases/tampa-future/original.webp',
-      alt: 'Captured original Tampa Bay thumbnail featuring the presenter and city-change theme.'
+      alt: 'Captured YouTube thumbnail with two presenters and the words ANTES DE ESCOLHER ORLANDO, CONHEÇA, and TAMPA 2026.',
+      issues: [
+        {
+          label: 'The wrong lead',
+          detail: 'Orlando leads, but this video is about Tampa’s 18 changes.'
+        },
+        {
+          label: 'A hidden key word',
+          detail: '“CONHEÇA” is partly covered by the presenters.'
+        },
+        {
+          label: 'The missed hook',
+          detail: '“TAMPA 2026” dominates while the 18-change hook is missing.'
+        }
+      ]
     },
-    whatChanged: 'The 18-item overview became a question about future daily life, a moving-to-Tampa guide, and a broader urban-life frame.',
-    why: 'The video discusses 18 developments and a five-, ten-, and twenty-year decision lens. Some projects are proposed, so the concepts ask about change without depicting a guaranteed future.',
+    whatChanged: 'The original leads with Orlando and a broad Tampa 2026 cue. The three selected concepts focus on a prospective mover’s decision, residents’ daily life, and changes beyond construction.',
+    why: 'The video surveys 18 developments and asks viewers to consider Tampa Bay over five, ten, and twenty years. The concepts frame possible effects as questions because some projects and outcomes remain uncertain.',
     variants: [
       {
-        id: 'a', revision: 'R02 A-r02',
-        title: 'A Tampa onde você vai viver está sendo construída agora',
+        id: 'a', revision: 'User-selected A',
+        title: 'Você moraria em Tampa Bay sem conhecer estas 18 mudanças?',
         image: './assets/cases/tampa-future/a.webp',
-        alt: 'Presenter beside a construction scene and E DAQUI A 10 ANOS? question.',
-        angle: 'The future-life question', annotation: 'today → ten years?',
-        change: 'A time arrow connects today’s building activity to a possible future lived experience.',
-        reason: 'The closing asks viewers to consider a five-, ten-, or twenty-year living decision.',
+        alt: 'Selected A concept: presenter beside construction and E DAQUI A 10 ANOS? text.',
+        angle: 'The future-life question', annotation: 'a decision across time',
+        change: 'The Orlando lead becomes a question about living with Tampa Bay’s changes over time.',
+        reason: 'The video closes with a five-, ten-, and twenty-year decision lens; ten years is a question, not a forecast.',
         arrowSide: 'right'
       },
       {
-        id: 'b', revision: 'R02 B-r02',
-        title: 'Antes de morar em Tampa Bay, entenda estas 18 mudanças',
+        id: 'b', revision: 'User-selected B',
+        title: 'Tampa Bay está crescendo — mas como fica a vida de quem mora lá?',
         image: './assets/cases/tampa-future/b.webp',
-        alt: 'Presenter beside a real street scene with O QUE VEM AÍ? in large type.',
-        angle: 'The mover’s guide', annotation: 'make the audience explicit',
-        change: 'The title speaks to a future resident rather than only listing local news.',
-        reason: 'The video’s opening connects the changes to a decision about living in the area.',
+        alt: 'Selected B concept: presenter beside a city crossing and E DEPOIS? text.',
+        angle: 'The resident-impact question', annotation: 'what happens to daily life?',
+        change: 'Growth becomes the setup for a question about residents’ daily experience.',
+        reason: 'The video connects developments to living in the area, without predicting every effect on residents.',
         arrowSide: 'left'
       },
       {
-        id: 'c', revision: 'R02 C-r03',
-        title: 'Tampa Bay: 18 mudanças em bairros, mobilidade e vida urbana',
+        id: 'c', revision: 'User-selected C',
+        title: '18 mudanças em Tampa Bay: o que existe além dos novos prédios?',
         image: './assets/cases/tampa-future/c.webp',
-        alt: 'Two presenters and real city footage with ALÉM DOS PRÉDIOS? text.',
+        alt: 'Selected C concept: presenter between construction and a city crossing under NOVA FASE? text.',
         angle: 'Beyond the buildings', annotation: 'more than construction',
-        change: 'The image and title widen the frame to neighborhoods, mobility and everyday life.',
-        reason: 'Those categories appear in the video, while the design avoids treating proposals as finished places.',
+        change: 'The title shifts from buildings alone to the wider urban-life story.',
+        reason: 'Mobility, neighborhoods, and amenities appear in the video, while future project outcomes remain open.',
         arrowSide: 'right'
       }
     ],
-    caveat: 'City footage and presenters come from the source video; the layouts do not document completed future projects.'
+    caveat: 'Selected evaluation concepts. These images contain AI-treated portraits whose likeness has not been verified. They were not creator-endorsed, uploaded, or live-tested; the scenes do not document completed future projects.'
   },
   {
     id: 'two-countries',

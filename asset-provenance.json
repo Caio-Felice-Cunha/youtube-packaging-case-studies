@@ -274,70 +274,75 @@
   {
     "case": "tampa-future",
     "role": "original",
-    "sourcePath": "agency-assets/projects/tampa-changing-90oi/r02/A-original.png",
-    "sourceSha256": "aeee7b87c7c7514409dd0e7f74857be3dc0829c0bef2fb89aee2ecdee18226bc",
+    "sourcePath": "agency-assets/projects/tampa-changing-90oi/r01/youtube-original-2026-09-29.jpg",
+    "sourceSha256": "17e49dc96cc8085f41d0c2770099814eb817b12ca861b50f880c4699eabaafa3",
     "sourceSize": [
-      1672,
-      941
-    ],
-    "webPath": "src/assets/cases/tampa-future/original.webp",
-    "webSha256": "893f69d231a8d7ad796d94d8b0a1b12dbe29acd05ab649025238a8541adb732e",
-    "webSize": [
-      1279,
+      1280,
       720
     ],
-    "webBytes": 184758
+    "webPath": "src/assets/cases/tampa-future/original.webp",
+    "webSha256": "5f4a915af5ddbbda6fea7af0d4004f726d712b47096cb495b5c63a11749a18b6",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 121622,
+    "sourceUrl": "https://i.ytimg.com/vi/90oiMU4xRcc/maxresdefault.jpg",
+    "capturedAt": "2026-09-29"
   },
   {
     "case": "tampa-future",
     "role": "a",
-    "sourcePath": "agency-assets/projects/tampa-changing-90oi/r02/A-r02.png",
-    "sourceSha256": "faef2889394e23f3a7c69fa5f5bf88267acbda00414372da7a1a6c802884d40e",
+    "sourcePath": "agency-assets/projects/tampa-changing-90oi/Morar_em_Tampa_Bay_ABC_para_enviar/A_thumbnail.png",
+    "sourceSha256": "2b9bace9c9de77398c47d94ef69de9c76736fb8d3a0de62864e1275cf94fc5df",
     "sourceSize": [
       1280,
       720
     ],
     "webPath": "src/assets/cases/tampa-future/a.webp",
-    "webSha256": "f547187991f0a9b9783b3bbcbd3a32f445fbebdd288be50d1f56eb31b828b184",
+    "webSha256": "9f97c2e41dd6d4ed548f7f7d2aa3d496db1cae576dec3606266a0e35c3c74167",
     "webSize": [
       1280,
       720
     ],
-    "webBytes": 89668
+    "webBytes": 181820,
+    "pairingRecord": "agency/operations/video-jobs/tampa-changing-90oi/selected-titles-review.md"
   },
   {
     "case": "tampa-future",
     "role": "b",
-    "sourcePath": "agency-assets/projects/tampa-changing-90oi/r02/B-r02.png",
-    "sourceSha256": "f155bdea193382eb78f790c240855d3d75374a37a666b00cbfa802c1543b698f",
+    "sourcePath": "agency-assets/projects/tampa-changing-90oi/Morar_em_Tampa_Bay_ABC_para_enviar/B_thumbnail.png",
+    "sourceSha256": "5ee485e7b86efe8cbc389672158a72786a2d88fca265c0552ef3d59803cba12b",
     "sourceSize": [
       1280,
       720
     ],
     "webPath": "src/assets/cases/tampa-future/b.webp",
-    "webSha256": "d5b210ced6899c1f4ba004ddfb5ae96c58dae3aba9705390bd56709cd584034a",
+    "webSha256": "e936d0a95f9c8719b791c1e00937487706246b0b6d31b1e4f81f765f5c570419",
     "webSize": [
       1280,
       720
     ],
-    "webBytes": 79448
+    "webBytes": 147740,
+    "pairingRecord": "agency/operations/video-jobs/tampa-changing-90oi/selected-titles-review.md"
   },
   {
     "case": "tampa-future",
     "role": "c",
-    "sourcePath": "agency-assets/projects/tampa-changing-90oi/r02/C-r03.png",
-    "sourceSha256": "a1eeefedf393bb141e5a55b8a703c23a94acdc4925895b749e33fd3bbade08ab",
+    "sourcePath": "agency-assets/projects/tampa-changing-90oi/Morar_em_Tampa_Bay_ABC_para_enviar/C_thumbnail.png",
+    "sourceSha256": "f3749fb8c5b7bbe6381359968b72deccfc76f99c1cdd19b59cfc054fb1fb12c6",
     "sourceSize": [
       1280,
       720
     ],
     "webPath": "src/assets/cases/tampa-future/c.webp",
-    "webSha256": "cf4b7aac0aec308c01026629e1aff5ba6497af010174b85b7126c039ff2cbe55",
+    "webSha256": "a045634fbd8b7096ef965a7277f03e78d4b109c771c5b1b17d319a9c21606d77",
     "webSize": [
       1280,
       720
     ],
-    "webBytes": 130130
+    "webBytes": 207738,
+    "pairingRecord": "agency/operations/video-jobs/tampa-changing-90oi/selected-titles-review.md"
   },
   {
     "case": "two-countries",

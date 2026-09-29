@@ -38,14 +38,33 @@ function renderVariant(variant, number) {
   </article>`;
 }
 
+/** @param {(typeof cases)[number]} study */
+function renderOriginal(study) {
+  const original = study.original;
+  const annotated = Boolean(original.issues);
+  const arrows = annotated ? `<svg class="original-audit-arrows" viewBox="0 0 1280 720" fill="none" aria-hidden="true" focusable="false">
+    <g class="audit-arrow" data-issue-arrow="1"><path d="M4 276C72 277 106 250 176 207"/><path d="m147 213 29-6-17 26"/></g>
+    <g class="audit-arrow" data-issue-arrow="2"><path d="M555 495C590 488 626 464 670 429"/><path d="m635 433 35-4-18 31"/></g>
+    <g class="audit-arrow" data-issue-arrow="3"><path d="M540 714C605 705 653 682 708 648"/><path d="m678 650 30-2-17 25"/></g>
+  </svg>` : '';
+  const issues = original.issues ? `<ol class="original-issues" aria-label="Three issues in the captured original">${original.issues.map((issue, index) => `<li><span class="issue-number" aria-hidden="true">0${index + 1}</span><div><strong>${text(issue.label)}</strong><p>${text(issue.detail)}</p></div></li>`).join('')}</ol>` : '';
+  const image = `<div class="image-frame${annotated ? ' original-audit-image' : ''}"><img src="${attribute(original.image)}" alt="${attribute(original.alt)}" width="1280" height="720" loading="lazy" decoding="async">${arrows}</div>`;
+  return `<article class="pair-card original${annotated ? ' annotated-original' : ''}">
+    ${annotated ? '' : '<div class="original-spacer" aria-hidden="true"><span>the starting point</span></div>'}
+    <figure${annotated ? ' class="original-audit-figure"' : ''}>${image}<figcaption><div class="pair-eyebrow"><span class="pair-label">ORIGINAL</span><span>Captured source</span></div><h4>${text(original.title)}</h4>${original.note ? `<p class="title-note">${text(original.note)}</p>` : ''}${issues}</figcaption></figure>
+    <div class="pair-reason original-caption"><span class="angle">Published source video</span><p>The original is shown as captured for comparison. The redesigns are independent proposals.</p></div>
+  </article>`;
+}
+
 /** @param {(typeof cases)[number]} study @param {number} number */
 function renderCase(study, number) {
-  return `<article class="case-study" id="${attribute(study.id)}" aria-labelledby="${attribute(study.id)}-title">
+  return `<article class="case-study${study.original.issues ? ' annotated-case' : ''}" id="${attribute(study.id)}" aria-labelledby="${attribute(study.id)}-title">
     <header class="case-heading"><div class="case-number">${String(number + 1).padStart(2, '0')} <span>/ 06</span></div><div class="case-heading-main"><p class="eyebrow">${text(study.channel)}</p><h3 id="${attribute(study.id)}-title">${text(study.topic)}</h3></div><a class="video-link" href="${attribute(study.videoUrl)}" target="_blank" rel="noopener noreferrer">Watch source video <span aria-hidden="true">↗</span></a></header>
     <div class="case-explainer"><div><span class="explainer-label">WHAT CHANGED</span><p>${text(study.whatChanged)}</p></div><div><span class="explainer-label">WHY</span><p>${text(study.why)}</p></div></div>
+    ${study.original.issues && study.caveat ? `<p class="case-caveat">${text(study.caveat)}</p>` : ''}
     <div class="case-columns-label" aria-hidden="true"><span>THE CAPTURED ORIGINAL</span><span>THREE DIRECTIONS <svg viewBox="0 0 60 22" fill="none"><path d="M2 12c18-9 34-9 53 0m-13-10 13 10-13 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
-    <div class="pair-grid"><article class="pair-card original"><div class="original-spacer" aria-hidden="true"><span>the starting point</span></div><figure><div class="image-frame"><img src="${attribute(study.original.image)}" alt="${attribute(study.original.alt)}" width="1280" height="720" loading="lazy" decoding="async"></div><figcaption><div class="pair-eyebrow"><span class="pair-label">ORIGINAL</span><span>Captured source</span></div><h4>${text(study.original.title)}</h4>${study.original.note ? `<p class="title-note">${text(study.original.note)}</p>` : ''}</figcaption></figure><div class="pair-reason original-caption"><span class="angle">Published source video</span><p>The original is shown as captured for comparison. The redesigns are independent proposals.</p></div></article>${study.variants.map(renderVariant).join('')}</div>
-    ${study.caveat ? `<p class="case-caveat">${text(study.caveat)}</p>` : ''}
+    <div class="pair-grid">${renderOriginal(study)}${study.variants.map(renderVariant).join('')}</div>
+    ${!study.original.issues && study.caveat ? `<p class="case-caveat">${text(study.caveat)}</p>` : ''}
   </article>`;
 }
 
