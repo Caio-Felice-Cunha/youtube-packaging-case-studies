@@ -1,4 +1,4 @@
-# Packaging by Caio
+# The Content Office — YouTube packaging case studies
 
 An independent YouTube title and thumbnail portfolio: six existing videos, each shown with a captured original and three proposed pairs. The concepts were not uploaded, live tested, or endorsed by the video creators. No performance increase is claimed.
 
@@ -24,4 +24,4 @@ The site uses local Caveat font files under the included [Open Font License](src
 
 ## Publishing
 
-The `pages.yml` workflow verifies content and browser behavior, builds `dist/`, and publishes it with GitHub Pages from `main`. This site is separate from the data analyst portfolio and has no link there.
+The `pages.yml` workflow verifies content and browser behavior, builds `dist/`, and publishes it with GitHub Pages from `main` at `https://thecontentoffice.studio/`. The domain is configured in the repository's Pages settings; this workflow does not use a `CNAME` file. This site is separate from the data analyst portfolio and has no link there.

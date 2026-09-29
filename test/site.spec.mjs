@@ -5,7 +5,8 @@ test('all cases, title pairs, images and links load from a project subpath', asy
   const failed = [];
   page.on('response', response => { if (response.status() >= 400) failed.push(`${response.status()} ${response.url()}`); });
   await page.goto('./');
-  await expect(page).toHaveTitle(/Packaging by Caio/);
+  await expect(page).toHaveTitle(/The Content Office/);
+  await expect(page.getByRole('link', { name: 'The Content Office, back to top' })).toBeVisible();
   await expect(page.locator('.case-study')).toHaveCount(6);
   await expect(page.locator('.pair-card')).toHaveCount(24);
   await expect(page.locator('.pair-card.redesign')).toHaveCount(18);
