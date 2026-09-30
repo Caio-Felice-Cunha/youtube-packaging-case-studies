@@ -60,7 +60,7 @@ export const cases = [
         alt: 'Ricardo holding a résumé with ISSO CONTA NO CV in large type.',
         angle: 'Progress before arrival', annotation: 'the résumé payoff',
         change: 'The frame moves from finding a vacancy to gaining work experience for a résumé before relocation.',
-        reason: 'It follows the video’s career-experience point without suggesting immigration credit or a job guarantee.',
+        reason: 'It connects the video’s career-experience point to building a stronger résumé.',
         arrowSide: 'right'
       }
     ],
@@ -162,7 +162,7 @@ export const cases = [
         alt: 'Creator beside stylized insurance comparison cards and a final-choice cue.',
         angle: 'The decision process', annotation: 'several quotes → one choice',
         change: 'Stylized comparison cards replace a single price reveal.',
-        reason: 'The creator describes calling several insurers before choosing one; the cards are an illustration, not measured quote data.',
+        reason: 'The comparison cards visualize the creator’s process of calling several insurers before choosing one.',
         arrowSide: 'right'
       }
     ]
@@ -202,7 +202,7 @@ export const cases = [
         alt: 'Presenter shown across past and present with EU NÃO SABIA text.',
         angle: 'The hindsight gap', annotation: 'past self ↔ present self',
         change: 'The visual makes the presenter’s earlier uncertainty the main story.',
-        reason: 'The opening supports a reflective “what I wish I knew” question without promising a guaranteed outcome.',
+        reason: 'The opening supports a reflective “what I wish I knew” question.',
         arrowSide: 'right'
       },
       {
@@ -245,7 +245,7 @@ export const cases = [
       ]
     },
     whatChanged: 'The original leads with Orlando and a broad Tampa 2026 cue. The three selected concepts focus on a prospective mover’s decision, residents’ daily life, and changes beyond construction.',
-    why: 'The video surveys 18 developments and asks viewers to consider Tampa Bay over five, ten, and twenty years. The concepts frame possible effects as questions because some projects and outcomes remain uncertain.',
+    why: 'The video surveys 18 developments and asks viewers to consider Tampa Bay over five, ten, and twenty years. The concepts connect those developments to the decisions of prospective movers and current residents.',
     variants: [
       {
         id: 'a', revision: 'User-selected A',
@@ -254,7 +254,7 @@ export const cases = [
         alt: 'Selected A concept: presenter beside construction and E DAQUI A 10 ANOS? text.',
         angle: 'The future-life question', annotation: 'a decision across time',
         change: 'The Orlando lead becomes a question about living with Tampa Bay’s changes over time.',
-        reason: 'The video closes with a five-, ten-, and twenty-year decision lens; ten years is a question, not a forecast.',
+        reason: 'The video closes with a five-, ten-, and twenty-year decision lens; the thumbnail makes that time horizon concrete.',
         arrowSide: 'right'
       },
       {
@@ -264,7 +264,7 @@ export const cases = [
         alt: 'Selected B concept: presenter beside a city crossing and E DEPOIS? text.',
         angle: 'The resident-impact question', annotation: 'what happens to daily life?',
         change: 'Growth becomes the setup for a question about residents’ daily experience.',
-        reason: 'The video connects developments to living in the area, without predicting every effect on residents.',
+        reason: 'The video connects new developments to residents’ daily life.',
         arrowSide: 'left'
       },
       {
@@ -274,7 +274,7 @@ export const cases = [
         alt: 'Selected C concept: presenter between construction and a city crossing under NOVA FASE? text.',
         angle: 'Beyond the buildings', annotation: 'more than construction',
         change: 'The title shifts from buildings alone to the wider urban-life story.',
-        reason: 'Mobility, neighborhoods, and amenities appear in the video, while future project outcomes remain open.',
+        reason: 'The video covers mobility, neighborhoods, and amenities alongside construction.',
         arrowSide: 'right'
       }
     ],
@@ -296,7 +296,7 @@ export const cases = [
       ]
     },
     whatChanged: 'The deadline-led original became three questions about attention across Brazil and the US, the reported request for one place to ask, and coordination between the two sides.',
-    why: 'The presenter describes a client request for simpler support across both countries. The redesigns frame that discussion as questions, not proof of completed service coverage.',
+    why: 'The presenter describes a client request for simpler support across both countries. The redesigns turn that request into questions about attention, simplicity, and coordination.',
     variants: [
       {
         id: 'a', revision: 'R05 A, carried from R03',
@@ -305,7 +305,7 @@ export const cases = [
         alt: 'Emerson beside a Brazil and US attention graphic with E O OUTRO PAÍS? text.',
         angle: 'The overlooked side', annotation: 'shift the attention',
         change: 'The question redirects attention from one country to the other.',
-        reason: 'The video introduces a two-country service discussion, while leaving specific tax obligations open.',
+        reason: 'The video’s two-country discussion gives the thumbnail a clear contrast between Brazil and the US.',
         arrowSide: 'right'
       },
       {
@@ -315,7 +315,7 @@ export const cases = [
         alt: 'Emerson centered between Brazil and US imagery with DOIS PAÍSES. UM LUGAR? text.',
         angle: 'The client request', annotation: 'two places, one question',
         change: 'A split Brazil/US composition puts the presenter between both contexts.',
-        reason: 'The title reflects the reported request for a simpler one-place discussion, not verified current service capacity.',
+        reason: 'The title reflects the reported request for a simpler one-place discussion.',
         arrowSide: 'left'
       },
       {
@@ -325,7 +325,7 @@ export const cases = [
         alt: 'Emerson pointing toward a two-country diagram with QUEM FAZ A PONTE? text.',
         angle: 'The missing bridge', annotation: 'make coordination visible',
         change: 'A simple diagram asks whether support connects the two jurisdictions.',
-        reason: 'It illustrates a possible coordination need without asserting that an actual client case failed.',
+        reason: 'The diagram makes the coordination question between Brazil and the US visible.',
         arrowSide: 'right'
       }
     ],

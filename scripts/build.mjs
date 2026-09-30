@@ -36,7 +36,7 @@ async function writePage(route, title, description, content, page) {
 }
 
 await writePage('', 'The Content Office — YouTube titles & thumbnails', 'Good video. Easy to miss. We study the video, find the strongest reason to watch, and build the title and thumbnail together.', renderHome(orderedCases), 'home');
-await writePage('work/', 'The work — The Content Office', 'Explore independent title and thumbnail concepts. Browse the original, three selected directions, and the thinking behind each change.', renderArchive(orderedCases), 'work');
+await writePage('work/', 'The work — The Content Office', 'Explore title and thumbnail concepts. Browse the original, three selected directions, and the thinking behind each change.', renderArchive(orderedCases), 'work');
 for (const [index, study] of orderedCases.entries()) {
   await writePage(`work/${study.id}/`, `${study.topic} — The Content Office`, study.whatChanged, renderCase(study, index, orderedCases), 'case');
 }

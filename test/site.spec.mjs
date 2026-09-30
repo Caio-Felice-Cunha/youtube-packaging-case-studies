@@ -13,7 +13,7 @@ test('Working Wall home leads with Tampa original/A and the selected card order'
   await expect(page.locator('.hero-comparison .paired-title')).toHaveText([tampa.original.title, tampa.variants[0].title]);
   await expect(page.locator('.hero-comparison img').nth(0)).toHaveAttribute('src', tampa.original.image);
   await expect(page.locator('.hero-comparison img').nth(1)).toHaveAttribute('src', tampa.variants[0].image);
-  await expect(page.locator('.hero-comparison .case-caveat')).toHaveText(tampa.caveat);
+  await expect(page.locator('.case-caveat, .work-disclosure, .concept-status, .title-note')).toHaveCount(0);
   await expect(page.locator('.concept-annotation')).toContainText(tampa.variants[0].annotation);
   await expect(page.getByRole('link', { name: 'View the full case' })).toHaveAttribute('href', './work/tampa-future/');
   await expect(page.locator('.featured-grid h3')).toHaveText(['What I would change', 'Brazil and US tax support', 'First-car costs']);
@@ -24,11 +24,10 @@ test('Working Wall home leads with Tampa original/A and the selected card order'
   await expect(page.locator('.header-contact')).toBeVisible();
   await expect(page.locator('.header-contact')).toHaveAttribute('href', 'mailto:caiofcunha@hotmail.com');
   await expect(page.locator('.hero-comparison .original')).not.toContainText('Independent concept');
-  await expect(page.locator('.work-disclosure')).toContainText('not uploaded, live-tested, or endorsed');
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
 });
 
-test('all six direct cases retain all 24 source-bound pairs, annotations and disclosures', async ({ page }, testInfo) => {
+test('all six direct cases retain all 24 source-bound pairs without disclaimer notices', async ({ page }, testInfo) => {
   const failed = [];
   page.on('response', response => { if (response.status() >= 400) failed.push(response.url()); });
   for (const study of cases) {
@@ -43,8 +42,7 @@ test('all six direct cases retain all 24 source-bound pairs, annotations and dis
     await expect(page.locator('.original-issues li')).toHaveCount(3);
     await expect(page.locator('.audit-line').first()).toHaveCSS('stroke', 'rgb(180, 35, 45)');
     await expect(page.locator('.video-link')).toHaveAttribute('href', study.videoUrl);
-    if (study.caveat) await expect(page.locator('.case-caveat')).toHaveText(study.caveat);
-    if (study.original.note) await expect(page.locator('.title-note')).toHaveText(study.original.note);
+    await expect(page.locator('.case-caveat, .case-disclosure, .concept-status, .title-note')).toHaveCount(0);
     const pairs = [study.original, ...study.variants];
     for (const [index, img] of (await page.locator('.pair-card img').all()).entries()) {
       await img.scrollIntoViewIfNeeded();
@@ -119,6 +117,7 @@ test('keyboard navigation and reduced motion work', async ({ page }) => {
 test('home, archive and each detail have no automated accessibility violations', async ({ page }, testInfo) => {
   for (const route of ['./', 'work/', ...cases.map(s => 'work/' + s.id + '/')]) {
     await page.goto(route);
+    await expect(page.locator('body')).not.toContainText(/independent concept|independent portfolio|not (?:uploaded|live-tested|verified|confirmed)|not proof of|not measured|not creator-endorsed|likeness has not|no performance result|guaranteed outcome|job guarantee|provisional concept|selected evaluation concepts/i);
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations, route).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth), route).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));

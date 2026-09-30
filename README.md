@@ -1,6 +1,6 @@
 # The Content Office — YouTube packaging case studies
 
-An independent YouTube title and thumbnail portfolio: six existing videos, each shown with a captured original and three proposed pairs. The concepts were not uploaded, live tested, or endorsed by the video creators. No performance increase is claimed.
+A YouTube title and thumbnail portfolio: six existing videos, each shown with a captured original and three proposed pairs, with the reasoning behind each design.
 
 ## Local preview
 
@@ -20,7 +20,7 @@ Open `http://127.0.0.1:4191/` or `http://127.0.0.1:4191/youtube-packaging-case-s
 
 - `/`: the Working Wall homepage, one original/concept comparison and three featured cases.
 - `/work/`: all case links, with progressive search, topic filtering and batches of 12. Without JavaScript, every case remains visible.
-- `/work/{id}/`: each complete original and A/B/C comparison, exact titles, rationale, red original critiques and disclosures.
+- `/work/{id}/`: each complete original and A/B/C comparison, exact titles, rationale and red original critiques.
 
 Archive filters use the URL and are carried to the case's **All work** link. Old homepage case hashes redirect to the matching detail page when JavaScript is available.
 
@@ -28,7 +28,7 @@ Archive filters use the URL and are carried to the case's **All work** link. Old
 
 ## Content and provenance
 
-The six curated studies live in `src/cases.mjs`. `asset-provenance.json` records every captured source and finished variant, its agency-workspace-relative source path, source SHA-256, web derivative SHA-256, and dimensions. The public images are resized/compressed display copies; the source records and masters remain in the private/local agency workspace. The selected résumé source title was captured through localization, so the page labels it accordingly.
+The six curated studies live in `src/cases.mjs`. `asset-provenance.json` records every captured source and finished variant, its agency-workspace-relative source path, source SHA-256, web derivative SHA-256, and dimensions. The public images are resized/compressed display copies; the source records and masters remain in the private/local agency workspace. Source caveat and capture-note fields are retained for provenance and are not rendered as site notices.
 
 The site uses locally hosted [Anton and Caveat](src/assets/fonts/README.md), with their Open Font Licenses included. Site code and explanatory copy are by Caio; original video and thumbnail rights belong to their respective creators. The displayed redesign artwork is not offered as a reusable image library.
 
