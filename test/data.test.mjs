@@ -5,9 +5,23 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { cases } from '../src/cases.mjs';
+import { selectResults } from '../src/assets/site.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const provenance = JSON.parse(await readFile(path.join(root, 'asset-provenance.json'), 'utf8'));
+
+test('an archive of 100 cases stays bounded, combines filters and normalizes accents', () => {
+  const fixture = Array.from({ length: 100 }, (_, index) => ({ search: `Case ${index} Canadá résumé`, topic: index % 2 ? 'Work' : 'Life' }));
+  assert.equal(selectResults(fixture, '', '', 1).visible.length, 12);
+  assert.equal(selectResults(fixture, '', '', 2).visible.length, 24);
+  assert.equal(selectResults(fixture, '', '', 99).visible.length, 100);
+  assert.equal(selectResults(fixture, '', '', 99).hasMore, false);
+  const filtered = selectResults(fixture, 'canada resume', 'Work', 1);
+  assert.equal(filtered.matches.length, 50);
+  assert.equal(filtered.visible.length, 12);
+  assert.equal(selectResults(fixture, 'no-match', '', 1).matches.length, 0);
+  assert.equal(selectResults(fixture, '', '', NaN).page, 1);
+});
 
 test('six approved cases expose every original and A/B/C pair', () => {
   assert.deepEqual(cases.map(study => study.id), ['seven-platforms', 'canadian-resume', 'first-car', 'starting-over', 'tampa-future', 'two-countries']);

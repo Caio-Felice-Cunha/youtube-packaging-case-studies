@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "lint": "node --check src/cases.mjs && node --check scripts/build.mjs && node --check scripts/lint.mjs && node scripts/lint.mjs",
+    "lint": "node --check src/cases.mjs && node --check src/presentation.mjs && node --check src/assets/site.mjs && node --check scripts/render.mjs && node --check scripts/build.mjs && node --check scripts/serve.mjs && node --check scripts/lint.mjs && node scripts/lint.mjs",
     "typecheck": "tsc --noEmit",
     "test": "node --test test/data.test.mjs && npm run build && playwright test",
     "test:e2e": "playwright test",

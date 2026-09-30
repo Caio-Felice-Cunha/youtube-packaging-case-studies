@@ -1,140 +1,151 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { cases } from '../src/cases.mjs';
 
-test('all cases, title pairs, images and links load from a project subpath', async ({ page }) => {
-  const failed = [];
-  page.on('response', response => { if (response.status() >= 400) failed.push(`${response.status()} ${response.url()}`); });
+test('Working Wall home uses exact original/B, bounded work and real contact', async ({ page }) => {
   await page.goto('./');
-  await expect(page).toHaveTitle(/The Content Office/);
-  await expect(page.getByRole('link', { name: 'The Content Office, back to top' })).toBeVisible();
-  await expect(page.locator('.case-study')).toHaveCount(6);
-  await expect(page.locator('.pair-card')).toHaveCount(24);
-  await expect(page.locator('.pair-card.redesign')).toHaveCount(18);
-  await expect(page.locator('.video-link')).toHaveCount(6);
-  await expect(page.locator('a[href="mailto:caiofcunha@hotmail.com"]')).toHaveCount(3);
-  await expect(page.getByText('Localized title captured at the source snapshot')).toBeVisible();
-  for (const image of await page.locator('.pair-card img').all()) {
-    await image.scrollIntoViewIfNeeded();
-    await expect(image).toHaveJSProperty('complete', true);
-    expect(await image.evaluate(element => element.naturalWidth)).toBeGreaterThan(0);
-    expect(await image.getAttribute('alt')).toBeTruthy();
+  await expect(page.locator('#hero-title')).toHaveText('GOOD VIDEO.EASY TO MISS.');
+  await expect(page.locator('.hero-pitch')).toContainText('We study the video');
+  await expect(page.locator('.featured-grid .work-card')).toHaveCount(3);
+  await expect(page.locator('.hero-comparison .paired-title')).toHaveText([cases[0].original.title, cases[0].variants[1].title]);
+  await expect(page.locator('.hero-comparison img').nth(1)).toHaveAttribute('src', cases[0].variants[1].image);
+  await expect(page.locator('.hero-comparison .audit-arrow')).toHaveCount(3);
+  await expect(page.locator('.hero-comparison .original-issues li')).toHaveCount(3);
+  await expect(page.locator('.header-contact')).toBeVisible();
+  await expect(page.locator('.header-contact')).toHaveAttribute('href', 'mailto:caiofcunha@hotmail.com');
+  await expect(page.locator('.hero-comparison .original')).not.toContainText('Independent concept');
+  await expect(page.locator('.work-disclosure')).toContainText('not uploaded, live-tested, or endorsed');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
+});
+
+test('all six direct cases retain all 24 source-bound pairs, annotations and disclosures', async ({ page }, testInfo) => {
+  const failed = [];
+  page.on('response', response => { if (response.status() >= 400) failed.push(response.url()); });
+  for (const study of cases) {
+    await page.goto('work/' + study.id + '/');
+    await expect(page.locator('.paired-title')).toHaveText([study.original.title, ...study.variants.map(v => v.title)]);
+    await expect(page.locator('.pair-card')).toHaveCount(4);
+    await expect(page.locator('.audit-arrow')).toHaveCount(3);
+    await expect(page.locator('.audit-number')).toHaveText(['1', '2', '3']);
+    await expect(page.locator('.original-issues li')).toHaveCount(3);
+    await expect(page.locator('.audit-line').first()).toHaveCSS('stroke', 'rgb(180, 35, 45)');
+    await expect(page.locator('.video-link')).toHaveAttribute('href', study.videoUrl);
+    if (study.caveat) await expect(page.locator('.case-caveat')).toHaveText(study.caveat);
+    if (study.original.note) await expect(page.locator('.title-note')).toHaveText(study.original.note);
+    const pairs = [study.original, ...study.variants];
+    for (const [index, img] of (await page.locator('.pair-card img').all()).entries()) {
+      await img.scrollIntoViewIfNeeded();
+      await expect(img).toHaveAttribute('src', '../../' + pairs[index].image.slice(2));
+      await expect(img).toHaveAttribute('alt', pairs[index].alt);
+      await expect(img).toHaveJSProperty('complete', true);
+      expect(await img.evaluate(el => el.naturalWidth)).toBeGreaterThan(0);
+      const box = await img.boundingBox();
+      expect(Math.abs(box.width / box.height - 16 / 9)).toBeLessThan(.015);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await page.screenshot({ path: testInfo.outputPath(study.id + '.png'), fullPage: true });
   }
   expect(failed).toEqual([]);
 });
 
-test('buyer-led hero has purposeful work and contact actions', async ({ page }) => {
-  await page.goto('./');
-  await expect(page.locator('#hero-title')).toHaveText('A strong video can still get skipped.');
-  await expect(page.locator('.hero-bottom')).toContainText('viewers may scroll past');
-  await expect(page.locator('.hero-bottom')).toContainText('I study your video');
-  await expect(page.getByRole('link', { name: 'See the redesigns' })).toHaveAttribute('href', '#case-studies');
-  await expect(page.getByRole('link', { name: 'Talk about your video' })).toHaveAttribute('href', 'mailto:caiofcunha@hotmail.com');
-  await expect(page.locator('.hero-scribble, .intro-band, #approach')).toHaveCount(0);
-  await expect(page.locator('a[href="#approach"]')).toHaveCount(0);
-  await expect(page.locator('.work-heading')).toContainText('I study the source video');
-  await expect(page.locator('.work-disclosure')).toContainText('not uploaded, live-tested, or endorsed');
-  await expect(page.locator('.site-header nav a[href="#work"]')).toHaveCount(1);
-  await expect(page.locator('.skip-link')).toHaveAttribute('href', '#work');
-  for (const width of [1440, 390, 320]) {
-    await page.setViewportSize({ width, height: 900 });
-    await expect(page.getByRole('link', { name: 'See the redesigns' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Talk about your video' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'The work', exact: true })).toBeVisible();
-    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
-    await page.getByRole('link', { name: 'See the redesigns' }).click();
-    await expect(page).toHaveURL(/#case-studies$/);
-    await expect(page.locator('#case-studies')).toBeInViewport();
-    await expect(page.locator('.case-study').first()).toBeInViewport();
-  }
+test('archive search, topic, empty state and return filters work', async ({ page }) => {
+  await page.goto('work/');
+  await expect(page.locator('.work-card:visible')).toHaveCount(6);
+  await page.getByLabel('Search the work').fill('resume');
+  await expect(page.locator('.work-card:visible')).toHaveCount(1);
+  await expect(page.getByRole('status')).toHaveText('1 case');
+  await page.locator('.work-card:visible a').click();
+  await expect(page).toHaveURL(/canadian-resume\/\?q=resume$/);
+  await page.locator('.back-to-work').first().click();
+  await expect(page.getByLabel('Search the work')).toHaveValue('resume');
+  await expect(page.locator('.work-card:visible')).toHaveCount(1);
+  await page.getByRole('button', { name: 'Clear filters' }).click();
+  await page.getByLabel('Topic', { exact: true }).selectOption('Life abroad');
+  await expect(page.locator('.work-card:visible')).toHaveCount(2);
+  await page.getByLabel('Search the work').fill('zz-no-match');
+  await expect(page.getByRole('heading', { name: 'No matching cases.' })).toBeVisible();
+  await page.getByRole('button', { name: 'Show all cases', exact: true }).click();
+  await expect(page.locator('.work-card:visible')).toHaveCount(6);
+  await expect(page.getByLabel('Search the work')).toBeFocused();
 });
 
-test('navigation, keyboard skip link and responsive layout work', async ({ page }, testInfo) => {
+test('archive reveal control handles a large fixture without publishing fake work', async ({ page }) => {
+  await page.route('**/work/', async route => {
+    const response = await route.fetch();
+    let html = await response.text();
+    const firstCard = html.match(/<article class="work-card"[\s\S]*?<\/article>/)[0];
+    html = html.replace('<div class="work-grid archive-grid">', '<div class="work-grid archive-grid">' + firstCard.repeat(20));
+    await route.fulfill({ response, body: html });
+  });
+  await page.goto('work/');
+  await expect(page.locator('.work-card:visible')).toHaveCount(12);
+  await page.getByRole('button', { name: 'Show more cases' }).click();
+  await expect(page.locator('.work-card:visible')).toHaveCount(24);
+  await expect(page.locator('.work-card').nth(12).locator('a')).toBeFocused();
+  await page.getByRole('button', { name: 'Show more cases' }).click();
+  await expect(page.locator('.work-card:visible')).toHaveCount(26);
+  await expect(page.getByRole('button', { name: 'Show more cases' })).toBeHidden();
+});
+
+test('keyboard navigation and reduced motion work', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('./');
   await page.keyboard.press('Tab');
   await expect(page.locator('.skip-link')).toBeFocused();
-  await page.locator('.case-index a').first().click();
-  await expect(page).toHaveURL(/#seven-platforms$/);
-  const width = await page.evaluate(() => document.documentElement.scrollWidth);
-  expect(width).toBeLessThanOrEqual(testInfo.project.use.viewport?.width ?? 1440);
-  if (testInfo.project.name === 'mobile') {
-    await expect(page.locator('.hand-note').first()).toBeHidden();
-    await expect(page.locator('.case-explainer').first()).toBeVisible();
-  }
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#main')).toBeFocused();
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
+  await page.getByRole('link', { name: 'View the full case' }).click();
+  await expect(page).toHaveURL(/work\/seven-platforms\/$/);
+  await page.getByRole('link', { name: 'Concept C', exact: true }).click();
+  await expect(page.locator('#concept-c')).toBeInViewport();
 });
 
-test('Tampa uses the selected pairings and keeps three original critiques visible on small screens', async ({ page }) => {
-  await page.goto('./#tampa-future');
-  const tampa = page.locator('#tampa-future');
-  await expect(tampa.locator('.pair-card h4')).toHaveText([
-    'Tampa está mudando: 18 novidades que você precisa conhecer',
-    'Você moraria em Tampa Bay sem conhecer estas 18 mudanças?',
-    'Tampa Bay está crescendo — mas como fica a vida de quem mora lá?',
-    '18 mudanças em Tampa Bay: o que existe além dos novos prédios?'
-  ]);
-  await expect(tampa.locator('.original-audit-arrows .audit-arrow')).toHaveCount(3);
-  await expect(tampa.locator('.annotated-original .original-issues li')).toHaveCount(3);
-  await expect(tampa.locator('.original-audit-arrows .audit-marker')).toHaveCount(3);
-  await expect(tampa.locator('.original-audit-arrows .audit-number')).toHaveText(['1', '2', '3']);
-  await expect(tampa.locator('.case-caveat')).toContainText('AI-treated portraits whose likeness has not been verified');
-  for (const width of [1440, 390, 320]) {
-    await page.setViewportSize({ width, height: 900 });
-    await expect(tampa.locator('.original-audit-arrows')).toBeVisible();
-    await expect(tampa.locator('.annotated-original .original-issues li')).toHaveCount(3);
-    for (const item of await tampa.locator('.original-issues li').all()) await expect(item).toBeVisible();
-    const originalImage = await tampa.locator('.original-audit-image').boundingBox();
-    const aImage = await tampa.locator('.redesign .image-frame').first().boundingBox();
-    expect(originalImage).not.toBeNull();
-    expect(aImage).not.toBeNull();
-    expect(Math.abs(originalImage.width - aImage.width)).toBeLessThan(1);
-    expect(Math.abs(originalImage.height - aImage.height)).toBeLessThan(1);
-    if (width === 1440) {
-      const cards = await Promise.all((await tampa.locator('.pair-card').all()).map(card => card.boundingBox()));
-      expect(cards.every(card => card && Math.abs(card.width - cards[0].width) < 1 && Math.abs(card.y - cards[0].y) < 1)).toBe(true);
-    }
-    const documentWidth = await page.evaluate(() => document.documentElement.scrollWidth);
-    expect(documentWidth, `horizontal overflow at ${width}px`).toBeLessThanOrEqual(width);
+test('home, archive and each detail have no automated accessibility violations', async ({ page }, testInfo) => {
+  for (const route of ['./', 'work/', ...cases.map(s => 'work/' + s.id + '/')]) {
+    await page.goto(route);
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations, route).toEqual([]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth), route).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
   }
-});
-
-test('every captured original has three red arrows and in-card mistake notes', async ({ page }) => {
   await page.goto('./');
-  const studies = page.locator('.case-study');
-  await expect(studies).toHaveCount(6);
-  for (const width of [1440, 390, 320]) {
-    await page.setViewportSize({ width, height: 900 });
-    for (const study of await studies.all()) {
-      const original = study.locator('.pair-card.original');
-      await expect(original.locator('.audit-arrow')).toHaveCount(3);
-      await expect(original.locator('.audit-number')).toHaveText(['1', '2', '3']);
-      await expect(original.locator('.original-issues li')).toHaveCount(3);
-      await expect(original.locator('.audit-line').first()).toHaveCSS('stroke', 'rgb(180, 35, 45)');
-      await expect(original.locator('.original-issues strong').first()).toHaveCSS('color', 'rgb(180, 35, 45)');
-      for (const note of await original.locator('.original-issues li').all()) await expect(note).toBeVisible();
-      const originalImage = await original.locator('.image-frame').boundingBox();
-      const redesignImage = await study.locator('.pair-card.redesign .image-frame').first().boundingBox();
-      expect(Math.abs(originalImage.width - redesignImage.width)).toBeLessThan(1);
-      expect(Math.abs(originalImage.height - redesignImage.height)).toBeLessThan(1);
-      if (width === 1440) {
-        const originalCard = await original.boundingBox();
-        const redesignCard = await study.locator('.pair-card.redesign').first().boundingBox();
-        expect(Math.abs(originalCard.width - redesignCard.width)).toBeLessThan(1);
-        expect(Math.abs(originalCard.y - redesignCard.y)).toBeLessThan(1);
-        await expect(study.locator('.hand-note').first()).toHaveCSS('color', 'rgb(49, 86, 237)');
+  for (const img of await page.locator('img').all()) { await img.scrollIntoViewIfNeeded(); await img.evaluate(el => el.decode()); }
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await page.screenshot({ path: testInfo.outputPath('home.png'), fullPage: true });
+  await page.goto('work/');
+  for (const img of await page.locator('img').all()) { await img.scrollIntoViewIfNeeded(); await img.evaluate(el => el.decode()); }
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await page.screenshot({ path: testInfo.outputPath('work.png'), fullPage: true });
+});
+
+test('one build serves root and project paths, including directory redirects and legacy links', async ({ page, request }) => {
+  const origin = 'http://127.0.0.1:4191';
+  for (const mount of ['/', '/youtube-packaging-case-studies/']) {
+    for (const route of ['', 'work/', ...cases.map(s => 'work/' + s.id + '/')]) {
+      const response = await page.goto(origin + mount + route);
+      expect(response.status()).toBe(200);
+      await expect(page.locator('h1')).toHaveCount(1);
+      for (const asset of await page.locator('link[rel="stylesheet"], script[src]').all()) {
+        const value = await asset.getAttribute('href') ?? await asset.getAttribute('src');
+        expect((await request.get(new URL(value, page.url()).href)).status()).toBe(200);
       }
     }
-    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    const redirect = await request.get(origin + mount + 'work', { maxRedirects: 0 });
+    expect(redirect.status()).toBe(301);
+    await page.goto(origin + mount + '#tampa-future');
+    await expect(page).toHaveURL(new RegExp(mount + 'work/tampa-future/$'));
+    expect((await request.get(origin + mount + 'not-a-case/')).status()).toBe(404);
   }
 });
 
-test('reduced motion avoids smooth scrolling', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('./');
-  const behavior = await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior);
-  expect(behavior).toBe('auto');
-});
-
-test('case page has no automated accessibility violations', async ({ page }) => {
-  await page.goto('./');
-  const results = await new AxeBuilder({ page }).analyze();
-  expect(results.violations).toEqual([]);
+test('all work and case details remain accessible without JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:4191/youtube-packaging-case-studies/work/');
+  await expect(page.locator('.work-card:visible')).toHaveCount(6);
+  await expect(page.locator('.archive-controls')).toBeHidden();
+  await page.locator('.work-card a').first().click();
+  await expect(page.locator('.pair-card')).toHaveCount(4);
+  await context.close();
 });
