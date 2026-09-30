@@ -2,10 +2,13 @@ import { readFile, writeFile, mkdir, cp, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { cases } from '../src/cases.mjs';
+import { workOrder } from '../src/presentation.mjs';
 import { renderHome, renderArchive, renderCase, renderHeader, renderFooter, escapeHtml } from './render.mjs';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outputRoot = path.join(projectRoot, 'dist');
+const priorities = new Map(workOrder.map((item, index) => [item.id, index]));
+const orderedCases = [...cases].sort((a, b) => (priorities.get(a.id) ?? workOrder.length) - (priorities.get(b.id) ?? workOrder.length));
 if (!cases.length || cases.some(study => !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(study.id) || study.variants.length !== 3 || study.original.issues?.length !== 3)) {
   throw new Error('Each case needs a safe ID, three selected concepts and three original critiques.');
 }
@@ -32,10 +35,10 @@ async function writePage(route, title, description, content, page) {
   await writeFile(path.join(dir, 'index.html'), html);
 }
 
-await writePage('', 'The Content Office — YouTube titles & thumbnails', 'Good video. Easy to miss. We study the video, find the strongest reason to watch, and build the title and thumbnail together.', renderHome(cases), 'home');
-await writePage('work/', 'The work — The Content Office', 'Explore independent title and thumbnail concepts. Browse the original, three selected directions, and the thinking behind each change.', renderArchive(cases), 'work');
-for (const [index, study] of cases.entries()) {
-  await writePage(`work/${study.id}/`, `${study.topic} — The Content Office`, study.whatChanged, renderCase(study, index, cases), 'case');
+await writePage('', 'The Content Office — YouTube titles & thumbnails', 'Good video. Easy to miss. We study the video, find the strongest reason to watch, and build the title and thumbnail together.', renderHome(orderedCases), 'home');
+await writePage('work/', 'The work — The Content Office', 'Explore independent title and thumbnail concepts. Browse the original, three selected directions, and the thinking behind each change.', renderArchive(orderedCases), 'work');
+for (const [index, study] of orderedCases.entries()) {
+  await writePage(`work/${study.id}/`, `${study.topic} — The Content Office`, study.whatChanged, renderCase(study, index, orderedCases), 'case');
 }
 await writeFile(path.join(outputRoot, '.nojekyll'), '');
 console.log(`Built home, work index and ${cases.length} case pages with ${cases.length * 4} source-bound assets.`);

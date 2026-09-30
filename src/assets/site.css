@@ -64,7 +64,7 @@ figure { margin: 0; }
 .hero-comparison .original-issues { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
 .hero-comparison .original-issues strong { font-size: 23px; }
 .concept-annotation { position: absolute; inset: 0; pointer-events: none; }
-.concept-annotation > span { position: absolute; top: 1%; left: 39%; color: var(--blue); background: var(--white); padding: 2px 8px; font: 700 clamp(15px, 1.6vw, 23px)/1.05 Caveat, cursive; }
+.concept-annotation > span { position: absolute; bottom: 1%; right: 3%; color: var(--blue); background: var(--white); padding: 2px 8px; font: 700 clamp(15px, 1.6vw, 23px)/1.05 Caveat, cursive; }
 .concept-annotation svg { width: 100%; height: 100%; }
 .concept-annotation path { stroke: var(--blue); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 3px white) drop-shadow(0 0 3px white); }
 .section { padding-block: 68px; }

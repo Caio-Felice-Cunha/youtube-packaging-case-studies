@@ -1,9 +1,14 @@
 // Presentation references approved IDs; artwork and title pairs live in cases.mjs.
-export const featured = [
-  { id: 'seven-platforms', variant: 'b' },
+export const workOrder = [
+  { id: 'tampa-future', variant: 'a' },
+  { id: 'starting-over', variant: 'a' },
+  { id: 'two-countries', variant: 'a' },
   { id: 'first-car', variant: 'a' },
-  { id: 'two-countries', variant: 'a' }
+  { id: 'seven-platforms', variant: 'b' },
+  { id: 'canadian-resume', variant: 'a' }
 ];
+export const mainComparison = workOrder[0];
+export const featured = workOrder.slice(1, 4);
 /** @type {Record<string, string>} */
 export const topics = {
   'seven-platforms': 'Work & careers',

@@ -2,13 +2,23 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { cases } from '../src/cases.mjs';
 
-test('Working Wall home uses exact original/B, bounded work and real contact', async ({ page }) => {
+const expectedOrder = ['tampa-future', 'starting-over', 'two-countries', 'first-car', 'seven-platforms', 'canadian-resume'];
+
+test('Working Wall home leads with Tampa original/A and the selected card order', async ({ page }) => {
+  const tampa = cases.find(study => study.id === 'tampa-future');
   await page.goto('./');
   await expect(page.locator('#hero-title')).toHaveText('GOOD VIDEO.EASY TO MISS.');
   await expect(page.locator('.hero-pitch')).toContainText('We study the video');
   await expect(page.locator('.featured-grid .work-card')).toHaveCount(3);
-  await expect(page.locator('.hero-comparison .paired-title')).toHaveText([cases[0].original.title, cases[0].variants[1].title]);
-  await expect(page.locator('.hero-comparison img').nth(1)).toHaveAttribute('src', cases[0].variants[1].image);
+  await expect(page.locator('.hero-comparison .paired-title')).toHaveText([tampa.original.title, tampa.variants[0].title]);
+  await expect(page.locator('.hero-comparison img').nth(0)).toHaveAttribute('src', tampa.original.image);
+  await expect(page.locator('.hero-comparison img').nth(1)).toHaveAttribute('src', tampa.variants[0].image);
+  await expect(page.locator('.hero-comparison .case-caveat')).toHaveText(tampa.caveat);
+  await expect(page.locator('.concept-annotation')).toContainText(tampa.variants[0].annotation);
+  await expect(page.getByRole('link', { name: 'View the full case' })).toHaveAttribute('href', './work/tampa-future/');
+  await expect(page.locator('.featured-grid h3')).toHaveText(['What I would change', 'Brazil and US tax support', 'First-car costs']);
+  expect(await page.locator('.featured-grid .work-card-link').evaluateAll(links => links.map(link => link.getAttribute('href')))).toEqual(expectedOrder.slice(1, 4).map(id => './work/' + id + '/'));
+  expect(await page.locator('.featured-grid img').evaluateAll(images => images.map(img => img.getAttribute('src')))).toEqual(expectedOrder.slice(1, 4).map(id => './assets/cases/' + id + '/a.webp'));
   await expect(page.locator('.hero-comparison .audit-arrow')).toHaveCount(3);
   await expect(page.locator('.hero-comparison .original-issues li')).toHaveCount(3);
   await expect(page.locator('.header-contact')).toBeVisible();
@@ -25,6 +35,9 @@ test('all six direct cases retain all 24 source-bound pairs, annotations and dis
     await page.goto('work/' + study.id + '/');
     await expect(page.locator('.paired-title')).toHaveText([study.original.title, ...study.variants.map(v => v.title)]);
     await expect(page.locator('.pair-card')).toHaveCount(4);
+    const position = expectedOrder.indexOf(study.id);
+    await expect(page.locator('.case-intro .eyebrow')).toContainText(String(position + 1).padStart(2, '0') + ' / 06');
+    await expect(page.locator('.case-next a').last()).toHaveAttribute('href', '../' + expectedOrder[(position + 1) % expectedOrder.length] + '/');
     await expect(page.locator('.audit-arrow')).toHaveCount(3);
     await expect(page.locator('.audit-number')).toHaveText(['1', '2', '3']);
     await expect(page.locator('.original-issues li')).toHaveCount(3);
@@ -52,6 +65,7 @@ test('all six direct cases retain all 24 source-bound pairs, annotations and dis
 test('archive search, topic, empty state and return filters work', async ({ page }) => {
   await page.goto('work/');
   await expect(page.locator('.work-card:visible')).toHaveCount(6);
+  expect(await page.locator('.archive-grid .work-card-link').evaluateAll(links => links.map(link => link.href))).toEqual(expectedOrder.map(id => new URL(id + '/', page.url()).href));
   await page.getByLabel('Search the work').fill('resume');
   await expect(page.locator('.work-card:visible')).toHaveCount(1);
   await expect(page.getByRole('status')).toHaveText('1 case');
@@ -97,7 +111,7 @@ test('keyboard navigation and reduced motion work', async ({ page }) => {
   await expect(page.locator('#main')).toBeFocused();
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
   await page.getByRole('link', { name: 'View the full case' }).click();
-  await expect(page).toHaveURL(/work\/seven-platforms\/$/);
+  await expect(page).toHaveURL(/work\/tampa-future\/$/);
   await page.getByRole('link', { name: 'Concept C', exact: true }).click();
   await expect(page.locator('#concept-c')).toBeInViewport();
 });
