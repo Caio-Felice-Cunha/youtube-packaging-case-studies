@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir, cp, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { cases } from '../src/cases.mjs';
+import { publishedCases as cases, unpublishedCaseIds } from '../src/cases.mjs';
 import { workOrder } from '../src/presentation.mjs';
 import { renderHome, renderArchive, renderCase, renderHeader, renderFooter, escapeHtml } from './render.mjs';
 
@@ -18,7 +18,11 @@ const template = await readFile(path.join(projectRoot, 'src/template.html'), 'ut
 if (outputRoot !== path.resolve(projectRoot, 'dist')) throw new Error('Unexpected build output path.');
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
-await cp(path.join(projectRoot, 'src/assets'), path.join(outputRoot, 'assets'), { recursive: true });
+const withheldAssets = unpublishedCaseIds.map(id => path.join(projectRoot, 'src/assets/cases', id));
+await cp(path.join(projectRoot, 'src/assets'), path.join(outputRoot, 'assets'), {
+  recursive: true,
+  filter: source => !withheldAssets.some(dir => source === dir || source.startsWith(dir + path.sep))
+});
 
 /** @param {string} route @param {string} title @param {string} description @param {string} content @param {string} page */
 async function writePage(route, title, description, content, page) {

@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { cases } from '../src/cases.mjs';
+import { publishedCases as cases } from '../src/cases.mjs';
 
-const expectedOrder = ['start-before-ready', 'cost-of-overtime', 'halloween-at-home', 'autumn-colour-plan', 'florida-seed-starts', 'tampa-future', 'starting-over', 'two-countries', 'first-car', 'seven-platforms', 'canadian-resume'];
+const expectedOrder = ['halloween-at-home', 'cost-of-overtime', 'florida-seed-starts', 'autumn-colour-plan', 'tampa-future', 'starting-over', 'two-countries', 'first-car', 'seven-platforms', 'canadian-resume'];
 
 test('wall waits for slow images and replaces failed tiles in both loop copies', async ({ page }, testInfo) => {
   const study = cases.find(item => item.id === 'canadian-resume');
@@ -42,21 +42,23 @@ test('wall waits for slow images and replaces failed tiles in both loop copies',
   await expect(wall).toHaveAttribute('data-motion', 'paused');
 });
 
-test('Working Wall home leads with Kyle original/A and the selected English cards', async ({ page }) => {
-  const hero = cases.find(study => study.id === 'start-before-ready');
+test('Working Wall home leads with Miller original/B and Urban Harvest replaces its card', async ({ page }) => {
+  const hero = cases.find(study => study.id === 'halloween-at-home');
   await page.goto('./');
   await expect(page.locator('#hero-title')).toHaveText('GOOD VIDEO.EASY TO MISS.');
   await expect(page.locator('.hero-pitch')).toContainText('We study the video');
   await expect(page.locator('.featured-grid .work-card')).toHaveCount(3);
-  await expect(page.locator('.hero-comparison .paired-title')).toHaveText([hero.original.title, hero.variants[0].title]);
+  await expect(page.locator('.hero-comparison .paired-title')).toHaveText([hero.original.title, hero.variants[1].title]);
   await expect(page.locator('.hero-comparison img').nth(0)).toHaveAttribute('src', hero.original.image);
-  await expect(page.locator('.hero-comparison img').nth(1)).toHaveAttribute('src', hero.variants[0].image);
+  await expect(page.locator('.hero-comparison img').nth(1)).toHaveAttribute('src', hero.variants[1].image);
   await expect(page.locator('.case-caveat, .work-disclosure, .concept-status, .title-note')).toHaveCount(0);
-  await expect(page.locator('.concept-annotation')).toContainText(hero.variants[0].annotation);
-  await expect(page.getByRole('link', { name: 'View the full case' })).toHaveAttribute('href', './work/start-before-ready/');
-  await expect(page.locator('.featured-grid h3')).toHaveText(['The cost of one more shift', 'When Halloween takes over', 'A wardrobe that feels like you']);
+  await expect(page.locator('.hero-comparison .redesign .pair-label')).toContainText('Selected concept B');
+  await expect(page.locator('img[src*="start-before-ready"]')).toHaveCount(0);
+  await expect(page.locator('body')).not.toContainText('Kyle Di Felice');
+  await expect(page.getByRole('link', { name: 'View the full case' })).toHaveAttribute('href', './work/halloween-at-home/');
+  await expect(page.locator('.featured-grid h3')).toHaveText(['The cost of one more shift', 'Florida’s February gamble', 'A wardrobe that feels like you']);
   expect(await page.locator('.featured-grid .work-card-link').evaluateAll(links => links.map(link => link.getAttribute('href')))).toEqual(expectedOrder.slice(1, 4).map(id => './work/' + id + '/'));
-  expect(await page.locator('.featured-grid img').evaluateAll(images => images.map(img => img.getAttribute('src')))).toEqual(['./assets/cases/cost-of-overtime/a.webp', './assets/cases/halloween-at-home/b.webp', './assets/cases/autumn-colour-plan/b.webp']);
+  expect(await page.locator('.featured-grid img').evaluateAll(images => images.map(img => img.getAttribute('src')))).toEqual(['./assets/cases/cost-of-overtime/a.webp', './assets/cases/florida-seed-starts/b.webp', './assets/cases/autumn-colour-plan/b.webp']);
   await expect(page.locator('.hero-comparison .audit-arrow')).toHaveCount(3);
   await expect(page.locator('.hero-comparison .original-issues li')).toHaveCount(3);
   await expect(page.locator('.header-contact')).toBeVisible();
@@ -65,7 +67,7 @@ test('Working Wall home leads with Kyle original/A and the selected English card
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
 });
 
-test('all eleven direct cases retain their pairs and a discreet portfolio notice', async ({ page }, testInfo) => {
+test('all ten published cases retain their pairs and a discreet portfolio notice', async ({ page }, testInfo) => {
   const failed = [];
   page.on('response', response => { if (response.status() >= 400) failed.push(response.url()); });
   for (const study of cases) {
@@ -75,7 +77,7 @@ test('all eleven direct cases retain their pairs and a discreet portfolio notice
     const expectedLanguages = [study.language ?? (study.original.note ? 'en' : 'pt-BR'), ...study.variants.map(() => study.language ?? 'pt-BR')];
     expect(await page.locator('.paired-title').evaluateAll(titles => titles.map(title => title.lang))).toEqual(expectedLanguages);
     const position = expectedOrder.indexOf(study.id);
-    await expect(page.locator('.case-intro .eyebrow')).toContainText(String(position + 1).padStart(2, '0') + ' / 11');
+    await expect(page.locator('.case-intro .eyebrow')).toContainText(String(position + 1).padStart(2, '0') + ' / 10');
     await expect(page.locator('.case-next a').last()).toHaveAttribute('href', '../' + expectedOrder[(position + 1) % expectedOrder.length] + '/');
     await expect(page.locator('.audit-arrow')).toHaveCount(3);
     await expect(page.locator('.audit-number')).toHaveText(['1', '2', '3']);
@@ -103,7 +105,7 @@ test('all eleven direct cases retain their pairs and a discreet portfolio notice
 
 test('archive search, topic, empty state and return filters work', async ({ page }) => {
   await page.goto('work/');
-  await expect(page.locator('.work-card:visible')).toHaveCount(11);
+  await expect(page.locator('.work-card:visible')).toHaveCount(10);
   expect(await page.locator('.archive-grid .work-card-link').evaluateAll(links => links.map(link => link.href))).toEqual(expectedOrder.map(id => new URL(id + '/', page.url()).href));
   await page.getByLabel('Search the work').fill('resume');
   await expect(page.locator('.work-card:visible')).toHaveCount(1);
@@ -119,7 +121,7 @@ test('archive search, topic, empty state and return filters work', async ({ page
   await page.getByLabel('Search the work').fill('zz-no-match');
   await expect(page.getByRole('heading', { name: 'No matching cases.' })).toBeVisible();
   await page.getByRole('button', { name: 'Show all cases', exact: true }).click();
-  await expect(page.locator('.work-card:visible')).toHaveCount(11);
+  await expect(page.locator('.work-card:visible')).toHaveCount(10);
   await expect(page.getByLabel('Search the work')).toBeFocused();
 });
 
@@ -152,7 +154,7 @@ test('keyboard navigation and reduced motion work', async ({ page }) => {
   await expect(page.locator('.thumbnail-track').first()).toHaveCSS('animation-name', 'none');
   await expect(page.locator('.motion-toggle')).toBeHidden();
   await page.getByRole('link', { name: 'View the full case' }).click();
-  await expect(page).toHaveURL(/work\/start-before-ready\/$/);
+  await expect(page).toHaveURL(/work\/halloween-at-home\/$/);
   await page.getByRole('link', { name: 'Concept C', exact: true }).click();
   await expect(page.locator('#concept-c')).toBeInViewport();
 });
@@ -193,6 +195,10 @@ test('one build serves root and project paths, including directory redirects and
     await page.goto(origin + mount + '#tampa-future');
     await expect(page).toHaveURL(new RegExp(mount + 'work/tampa-future/$'));
     expect((await request.get(origin + mount + 'not-a-case/')).status()).toBe(404);
+    expect((await request.get(origin + mount + 'work/start-before-ready/')).status()).toBe(404);
+    for (const role of ['original', 'a', 'b', 'c']) {
+      expect((await request.get(origin + mount + `assets/cases/start-before-ready/${role}.webp`)).status()).toBe(404);
+    }
   }
 });
 
@@ -204,7 +210,7 @@ test('all work and case details remain accessible without JavaScript', async ({ 
   await expect(page.locator('.thumbnail-track').first()).toHaveCSS('animation-play-state', 'paused');
   await expect(page.locator('#packaging-title')).toBeVisible();
   await page.goto('http://127.0.0.1:4191/youtube-packaging-case-studies/work/');
-  await expect(page.locator('.work-card:visible')).toHaveCount(11);
+  await expect(page.locator('.work-card:visible')).toHaveCount(10);
   await expect(page.locator('.archive-controls')).toBeHidden();
   await page.locator('.work-card a').first().click();
   await expect(page.locator('.pair-card')).toHaveCount(4);
@@ -217,7 +223,7 @@ test('redesign wall moves right, left, right and pauses with sourced packaging n
   await expect(wall.locator('.thumbnail-row')).toHaveCount(3);
   const redesigns = new Set(cases.flatMap(study => study.variants.map(v => v.image)));
   const sources = await wall.locator('img').evaluateAll(images => images.map(img => img.getAttribute('src')));
-  expect(sources.length).toBe(66);
+  expect(sources.length).toBe(60);
   expect(new Set(sources)).toEqual(redesigns);
   await expect(wall.locator('a, button')).toHaveCount(2);
   await expect(wall.locator('.thumbnail-rows')).toHaveAttribute('aria-hidden', 'true');

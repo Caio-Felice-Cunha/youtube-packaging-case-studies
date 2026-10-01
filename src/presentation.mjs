@@ -1,10 +1,9 @@
 // Presentation references approved IDs; artwork and title pairs live in cases.mjs.
 export const workOrder = [
-  { id: 'start-before-ready', variant: 'a' },
-  { id: 'cost-of-overtime', variant: 'a' },
   { id: 'halloween-at-home', variant: 'b' },
-  { id: 'autumn-colour-plan', variant: 'b' },
+  { id: 'cost-of-overtime', variant: 'a' },
   { id: 'florida-seed-starts', variant: 'b' },
+  { id: 'autumn-colour-plan', variant: 'b' },
   { id: 'tampa-future', variant: 'a' },
   { id: 'starting-over', variant: 'a' },
   { id: 'two-countries', variant: 'a' },

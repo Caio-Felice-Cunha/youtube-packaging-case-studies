@@ -335,3 +335,7 @@ export const cases = [
     caveat: 'Provisional concept. The publisher has not confirmed present service scope or validated the source video’s tax and deadline statements.'
   }
 ];
+
+// Temporarily withheld from every deployed page and its asset output.
+export const unpublishedCaseIds = ['start-before-ready'];
+export const publishedCases = cases.filter(study => !unpublishedCaseIds.includes(study.id));
