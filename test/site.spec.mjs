@@ -217,6 +217,7 @@ test('redesign wall moves right, left, right and pauses with sourced packaging n
   await expect(wall).toHaveAttribute('data-motion', 'paused');
   const track = wall.locator('.thumbnail-track').first();
   await expect(track).toHaveCSS('animation-play-state', 'paused');
+  await track.evaluate(el => Promise.all(el.getAnimations().map(animation => animation.ready)));
   const position = await track.evaluate(el => getComputedStyle(el).transform);
   await page.waitForTimeout(150);
   await expect(track).toHaveCSS('transform', position);
