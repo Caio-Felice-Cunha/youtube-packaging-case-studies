@@ -187,7 +187,7 @@ test('redesign wall moves right, left, right and pauses with sourced packaging n
   await expect(page.locator('.expert-notes a')).toHaveCount(0);
   await expect(page.locator('.expert-notes blockquote')).toHaveText([
     '“I often actually say that it’s 50% of the game.”',
-    '“We’re making a thumbnail, we’re not making an art piece.”'
+    '“The difference between 10,000 views and 100,000 views.”'
   ]);
   expect(await page.locator('.expert-notes img').evaluateAll(images => images.map(img => img.getAttribute('src')))).toEqual([
     'assets/experts/paddy-galloway.jpg', 'assets/experts/jacob-bryant.jpg'
