@@ -411,5 +411,405 @@
       720
     ],
     "webBytes": 76220
+  },
+  {
+    "case": "start-before-ready",
+    "role": "original",
+    "sourcePath": "agency-assets/projects/kyledifelice-dGCgbkmr69k-001/r01/source/channel-dGCgbkmr69k.jpg",
+    "sourceRevision": "Captured original 2026-09-30",
+    "pairedTitle": "Give me 104 seconds... I’ll DELETE your need to feel ready",
+    "sourceSha256": "53ab33b6e03ce1fdeccde4e6be29056077544f4a65adbf16fc6862417d6ec7e5",
+    "sourceSize": [
+      480,
+      360
+    ],
+    "webPath": "src/assets/cases/start-before-ready/original.webp",
+    "webSha256": "6927a99d6c77b129415ca7b3c3e901ab0383d99f63a697523a2978fc2af5e707",
+    "webSize": [
+      480,
+      270
+    ],
+    "webBytes": 19690,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling. Removed captured black letterbox bars only: crop [0,45,480,315]."
+  },
+  {
+    "case": "start-before-ready",
+    "role": "a",
+    "sourcePath": "agency-assets/projects/kyledifelice-dGCgbkmr69k-001/r05/final/A-thumbnail-r05.jpg",
+    "sourceRevision": "R05 A",
+    "pairedTitle": "Are You Giving Your Mood Control Over You?",
+    "sourceSha256": "99c143c3aabd600df1e979ac8966fd001dcef69e96556fa348214a49dc9c6dc5",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/start-before-ready/a.webp",
+    "webSha256": "a43e47174ee0ef73a6b3bdbd96f5cf8ddaa5a72ec5c993a0028ec03d994f7989",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 125030,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "start-before-ready",
+    "role": "b",
+    "sourcePath": "agency-assets/projects/kyledifelice-dGCgbkmr69k-001/r05/final/B-thumbnail-r05.jpg",
+    "sourceRevision": "R05 B",
+    "pairedTitle": "What If You Don't Have To Feel Ready To Start?",
+    "sourceSha256": "8a0ff26790f6b01651192d87768d060109e14b72746ca8dc0624d0a2b5cace35",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/start-before-ready/b.webp",
+    "webSha256": "95931d01a8bc4e5d7292b01f54aaa21f85b76166c23380a031af2ac7d0314496",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 180394,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "start-before-ready",
+    "role": "c",
+    "sourcePath": "agency-assets/projects/kyledifelice-dGCgbkmr69k-001/r05/final/C-thumbnail-r05.jpg",
+    "sourceRevision": "R05 C",
+    "pairedTitle": "Can't Get Started? Do This Before You Begin",
+    "sourceSha256": "b747242cd74c9cc690a3b8fcbef285bdcf8abe1d830da1bdc7b7d40570e1881e",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/start-before-ready/c.webp",
+    "webSha256": "7f7918d978473f9a92e0448ab4c616752bdea76381ee023e92e73511e589f880",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 159484,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "cost-of-overtime",
+    "role": "original",
+    "sourcePath": "agency-assets/projects/nurses-to-riches-Pma2Yg1vTfo/r01/source/original-thumb.jpg",
+    "sourceRevision": "Captured original 2026-09-29",
+    "pairedTitle": "I Stopped Working OVERTIME As a NURSE Once I Learned This",
+    "sourceSha256": "ad7ab3f748019ff016c19d70cfa3f021fede60f64f5063567817d64634d058a0",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/cost-of-overtime/original.webp",
+    "webSha256": "69e8e56f1ab8aea09d0aa0714da818a299949de7bb026ff91914250619d0e451",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 61684,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "cost-of-overtime",
+    "role": "a",
+    "sourcePath": "agency-assets/projects/nurses-to-riches-Pma2Yg1vTfo/r01/exports/A-r20.jpg",
+    "sourceRevision": "A R20 / titles R17",
+    "pairedTitle": "Nurse Overtime Paid Off $128K Of Debt. Then I Stopped.",
+    "sourceSha256": "c12eb14ac438cc8330faa8afba15e4e59bd70a3054cf9bcb6d43293b0886a49d",
+    "sourceSize": [
+      1664,
+      936
+    ],
+    "webPath": "src/assets/cases/cost-of-overtime/a.webp",
+    "webSha256": "94050aad1b5d3fc0f7be42573cbe3a9356ffd07cbcfb08153d32ca8abe7d228d",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 127172,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "cost-of-overtime",
+    "role": "b",
+    "sourcePath": "agency-assets/projects/nurses-to-riches-Pma2Yg1vTfo/r01/exports/B-r22.jpg",
+    "sourceRevision": "B R22 / titles R17",
+    "pairedTitle": "What Nurse Overtime Was Really Costing Me",
+    "sourceSha256": "c29c23e452c71495601acbec6b5fd4a865568d62b45d6c6416c79162ff2d429f",
+    "sourceSize": [
+      1664,
+      936
+    ],
+    "webPath": "src/assets/cases/cost-of-overtime/b.webp",
+    "webSha256": "2c57b354e531113047304164429f5f0fb7655f0cb871af3bc59fa8fb7092091f",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 90230,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "cost-of-overtime",
+    "role": "c",
+    "sourcePath": "agency-assets/projects/nurses-to-riches-Pma2Yg1vTfo/r01/exports/C-r15.jpg",
+    "sourceRevision": "C R15 / titles R17",
+    "pairedTitle": "Becoming A Dad Changed What Overtime Was Worth",
+    "sourceSha256": "3a9a47a7c3bf9096c403791cbe4e5cbd83b0df9aba915becb6e455622abbd532",
+    "sourceSize": [
+      1664,
+      936
+    ],
+    "webPath": "src/assets/cases/cost-of-overtime/c.webp",
+    "webSha256": "80813f7f4b9afeaec17719b65e7cebf5de0dd8c4c3dc7fd5636f96e81c12ebf9",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 68448,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "halloween-at-home",
+    "role": "original",
+    "sourcePath": "agency-assets/projects/miller-halloween-2026/portfolio-source/youtube-maxres-2026-09-30.jpg",
+    "sourceRevision": "Matched original 2026-09-30",
+    "pairedTitle": "NEW 2026 Halloween Decorate With Me! Fall Halloween Decorating Ideas! Decorate and Bake",
+    "sourceSha256": "308269d6146657e033402139635d38fb69d491eca6550f8b0a3869f7283531b7",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/halloween-at-home/original.webp",
+    "webSha256": "70cbf39687cc8d6322b3576cd0ab13e3b32d7d8692846ffe0ff1502c5b9c27ac",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 134308,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "halloween-at-home",
+    "role": "a",
+    "sourcePath": "agency-assets/projects/miller-halloween-2026/r03/A-final.png",
+    "sourceRevision": "R03 A / titles R15",
+    "pairedTitle": "Can I Make My Fall Decor Work for Halloween?",
+    "sourceSha256": "c5ae25b68c3dedbebf3a19063206f4ce6afd3d80d700386173b529bdea1dfc9e",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/halloween-at-home/a.webp",
+    "webSha256": "a112c1e568a8f4b7633a2c67905bbf34fb0c994d66bdc53c92593c4cc46545ee",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 160088,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "halloween-at-home",
+    "role": "b",
+    "sourcePath": "agency-assets/projects/miller-halloween-2026/r03/B-final-r02.png",
+    "sourceRevision": "R03 B-final-r02 / titles R15",
+    "pairedTitle": "Are These Ghosts Too Big for My Kitchen Island?",
+    "sourceSha256": "5454575c0197810f807b5961129de848fce1659a83a0c51e01e5594c158f19e7",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/halloween-at-home/b.webp",
+    "webSha256": "330154f8da33b5eaeeb005b120e3366995d34166b8887773f6015c4086f18390",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 109940,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "halloween-at-home",
+    "role": "c",
+    "sourcePath": "agency-assets/projects/miller-halloween-2026/r03/C-final-dont-bake-r14.png",
+    "sourceRevision": "C R14 / titles R15",
+    "pairedTitle": "The Trick to Ghost Brownies That Hold Their Shape",
+    "sourceSha256": "1971baddae7e9c0cc64d63ca4842194a75487dfa8ef604fa6331d3c239ce9802",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/halloween-at-home/c.webp",
+    "webSha256": "e372170fbb507c5179da6d9d946ad0e72f491049a66c51cd0e2470f23ca5fea0",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 122312,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "autumn-colour-plan",
+    "role": "original",
+    "sourcePath": "agency-assets/projects/yorkshiresewgirl-dsvzoeyi3rq-001/r01/source/original-thumbnail.jpg",
+    "sourceRevision": "Captured original 2026-09-29",
+    "pairedTitle": "Can I SEW An Autumn CAPSULE Wardrobe? || Episode One: Colour Pallette",
+    "sourceSha256": "295954fce7fa0f4bbea5cf9f5b4c62689dabd22bdf029035d4ecf0156c154a35",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/autumn-colour-plan/original.webp",
+    "webSha256": "a5c8004dcfe49ca42f659a19bd4c6d1dfdf48e2a2c0551144ca3044742ad073c",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 105818,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "autumn-colour-plan",
+    "role": "a",
+    "sourcePath": "agency-assets/projects/yorkshiresewgirl-dsvzoeyi3rq-001/r04/background-previews/A-recording-room-preview.jpg",
+    "sourceRevision": "R04 recording room A",
+    "pairedTitle": "My Handmade Clothes Don't Always Match | My Autumn Colour Plan",
+    "sourceSha256": "01c3fb95cda74a57016323e3555db5461503805bd70cd5975d1fa18c765269cc",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/autumn-colour-plan/a.webp",
+    "webSha256": "624f6fb0ae81aa3147e3eb9b7755b808d5db81f38915b3e1bdca747017aecf4f",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 123758,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "autumn-colour-plan",
+    "role": "b",
+    "sourcePath": "agency-assets/projects/yorkshiresewgirl-dsvzoeyi3rq-001/r04/background-previews/B-recording-room-preview.jpg",
+    "sourceRevision": "R04 recording room B",
+    "pairedTitle": "My Autumn Capsule Colour Plan: Will It Still Feel Like Me?",
+    "sourceSha256": "f755190d1b51890237c8ca018c7823e3df3478d625096837534fa5f4f501a1e5",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/autumn-colour-plan/b.webp",
+    "webSha256": "16e201fca84908beee34f5583eb1570e42d65f7c3d5f10d6e3094ba6c7cb6540",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 128262,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "autumn-colour-plan",
+    "role": "c",
+    "sourcePath": "agency-assets/projects/yorkshiresewgirl-dsvzoeyi3rq-001/r04/background-previews/C-recording-room-preview.jpg",
+    "sourceRevision": "R04 recording room C",
+    "pairedTitle": "Starting Over: The First Step in My Autumn Capsule",
+    "sourceSha256": "204be09a01a5f9e0b1a66d561874374e476bcd99e48416600cc138a821806c63",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/autumn-colour-plan/c.webp",
+    "webSha256": "37dff901704f63ace01c3f53e2650338d3ca09403492dd007e272d32fb9ed52a",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 98686,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "florida-seed-starts",
+    "role": "original",
+    "sourcePath": "agency-assets/projects/urbanharvest-jtfzecdhtre/portfolio-source/youtube-maxres-2026-09-30.jpg",
+    "sourceRevision": "Matched original 2026-09-30",
+    "pairedTitle": "6 Veggies You Can Start in February",
+    "sourceSha256": "2522219746c1078ce5261ba3a41e5ec56b565b603c1942d1aa0d287c4f127808",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/florida-seed-starts/original.webp",
+    "webSha256": "69b86217a520470884dc4d126e7cbf5a3c6240ca2ce0023cd47e6c0517d96635",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 79152,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "florida-seed-starts",
+    "role": "a",
+    "sourcePath": "agency-assets/projects/urbanharvest-jtfzecdhtre/r09/A.png",
+    "sourceRevision": "R09 A",
+    "pairedTitle": "Florida Can Still Freeze. Why Start These 6 Seeds In February?",
+    "sourceSha256": "13aa29564ea691f05209b04c24f3e33ca3fbce22e02e10164f80e1db3ba321a4",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/florida-seed-starts/a.webp",
+    "webSha256": "7e1afcc383e3e68b036ea6689814794c6e3133c2be7d1942c633458c5e0bdae5",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 145784,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "florida-seed-starts",
+    "role": "b",
+    "sourcePath": "agency-assets/projects/urbanharvest-jtfzecdhtre/r09/B.png",
+    "sourceRevision": "R09 B",
+    "pairedTitle": "6 Florida February Plants—Why Did One Cucumber Die?",
+    "sourceSha256": "25d43cb0b2180b4d53284e2be31c76a3edd635abcdc4be6def2d877fdf605f37",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/florida-seed-starts/b.webp",
+    "webSha256": "46b8fa12bb14c2d276e4b518ed6d9a726dece455c5a183d431d8e33ea74c6ded",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 211684,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
+  },
+  {
+    "case": "florida-seed-starts",
+    "role": "c",
+    "sourcePath": "agency-assets/projects/urbanharvest-jtfzecdhtre/r10/C.png",
+    "sourceRevision": "R10 C",
+    "pairedTitle": "Would You Risk Starting Plant #5 In Florida This February?",
+    "sourceSha256": "7593e038bbb34f1da9316dd9d07cd89a0f350280ae79e7da6f798abd21acb561",
+    "sourceSize": [
+      1280,
+      720
+    ],
+    "webPath": "src/assets/cases/florida-seed-starts/c.webp",
+    "webSha256": "d8fc0230c11461b83a9ee8b36f0fab00598b47604b56a6666a2637db31262011",
+    "webSize": [
+      1280,
+      720
+    ],
+    "webBytes": 167018,
+    "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
   }
 ]

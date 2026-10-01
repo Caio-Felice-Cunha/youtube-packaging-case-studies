@@ -1,12 +1,14 @@
+import { englishCases } from './english-cases.mjs';
+
 /**
  * @typedef {{
  *   id: 'a' | 'b' | 'c', title: string, image: string, alt: string,
  *   revision: string, angle: string, annotation: string,
- *   change: string, reason: string, arrowSide: 'left' | 'right'
+ *   change: string, reason: string, arrowSide: 'left' | 'right', annotationPath?: string
  * }} Variant
  * @typedef {{ label: string, detail: string, arrow: { origin: [number, number], bend: [number, number], target: [number, number] } }} OriginalIssue
  * @typedef {{
- *   id: string, channel: string, topic: string, videoUrl: string,
+ *   id: string, channel: string, topic: string, videoUrl: string, language?: 'en' | 'pt-BR',
  *   original: { title: string, image: string, alt: string, note?: string, issues?: OriginalIssue[] },
  *   whatChanged: string, why: string, variants: Variant[],
  *   caveat?: string
@@ -15,6 +17,7 @@
 
 /** @type {CaseStudy[]} */
 export const cases = [
+  ...englishCases,
   {
     id: 'seven-platforms',
     channel: 'Do Brasil ao Canadá',

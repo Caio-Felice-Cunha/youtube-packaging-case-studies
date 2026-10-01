@@ -23,9 +23,9 @@ test('an archive of 100 cases stays bounded, combines filters and normalizes acc
   assert.equal(selectResults(fixture, '', '', NaN).page, 1);
 });
 
-test('six approved cases expose every original and A/B/C pair', () => {
-  assert.deepEqual(cases.map(study => study.id), ['seven-platforms', 'canadian-resume', 'first-car', 'starting-over', 'tampa-future', 'two-countries']);
-  assert.equal(cases.flatMap(study => [study.original, ...study.variants]).length, 24);
+test('eleven curated cases expose every original and A/B/C pair', () => {
+  assert.deepEqual(cases.map(study => study.id), ['start-before-ready', 'cost-of-overtime', 'halloween-at-home', 'autumn-colour-plan', 'florida-seed-starts', 'seven-platforms', 'canadian-resume', 'first-car', 'starting-over', 'tampa-future', 'two-countries']);
+  assert.equal(cases.flatMap(study => [study.original, ...study.variants]).length, 44);
   for (const study of cases) {
     assert.deepEqual(study.variants.map(variant => variant.id), ['a', 'b', 'c']);
     assert.ok(study.whatChanged && study.why);
@@ -40,7 +40,7 @@ test('six approved cases expose every original and A/B/C pair', () => {
 });
 
 test('every web image is recorded and byte-stable', async () => {
-  assert.equal(provenance.length, 24);
+  assert.equal(provenance.length, 44);
   for (const item of provenance) {
     assert.match(item.sourcePath, /^(agency|agency-assets)\//);
     assert.match(item.sourceSha256, /^[0-9a-f]{64}$/);
@@ -70,7 +70,7 @@ test('Tampa source and selected A/B/C titles stay bound to the exact handoff fil
     assert.equal(record.webPath.replace(/^src\//, './'), cards[index].image);
     assert.equal(cards[index].title, title);
   }
-  assert.equal(new Set(provenance.map(item => item.webSha256)).size, 24);
+  assert.equal(new Set(provenance.map(item => item.webSha256)).size, 44);
   assert.deepEqual(tampa.original.issues?.map(issue => issue.detail), [
     'Orlando leads, but this video is about Tampa’s 18 changes.',
     '“CONHEÇA” is partly covered by the presenters.',
@@ -84,4 +84,36 @@ test('sensitive source notes and portfolio crossover stay out of public copy', (
   assert.match(cases.find(study => study.id === 'two-countries').caveat, /publisher.*not confirmed/i);
   const copy = JSON.stringify(cases);
   assert.doesNotMatch(copy, /CaioFeliceCunha\.github\.io|C:\\Users\\|measured (?:lift|improvement)/i);
+});
+
+
+test('English pairs retain the exact captured titles, selected revisions and source bindings', () => {
+  const selected = [
+    ['start-before-ready', 'a', 'A-thumbnail-r05.jpg', '99c143c3aabd600df1e979ac8966fd001dcef69e96556fa348214a49dc9c6dc5'],
+    ['cost-of-overtime', 'a', 'A-r20.jpg', 'c12eb14ac438cc8330faa8afba15e4e59bd70a3054cf9bcb6d43293b0886a49d'],
+    ['halloween-at-home', 'b', 'B-final-r02.png', '5454575c0197810f807b5961129de848fce1659a83a0c51e01e5594c158f19e7'],
+    ['autumn-colour-plan', 'b', 'B-recording-room-preview.jpg', 'f755190d1b51890237c8ca018c7823e3df3478d625096837534fa5f4f501a1e5'],
+    ['florida-seed-starts', 'b', 'B.png', '25d43cb0b2180b4d53284e2be31c76a3edd635abcdc4be6def2d877fdf605f37']
+  ];
+  for (const [id, role, filename, digest] of selected) {
+    const study = cases.find(s => s.id === id);
+    assert.equal(study.language, 'en');
+    for (const [index, card] of [study.original, ...study.variants].entries()) {
+      const record = provenance.find(item => item.case === id && item.role === ['original', 'a', 'b', 'c'][index]);
+      assert.ok(record);
+      assert.equal(card.image, record.webPath.replace(/^src\//, './'));
+      assert.equal(card.title, record.pairedTitle);
+      if (index) assert.equal(card.revision, record.sourceRevision);
+    }
+    const cover = provenance.find(item => item.case === id && item.role === role);
+    assert.ok(cover.sourcePath.endsWith('/' + filename));
+    assert.equal(cover.sourceSha256, digest);
+  }
+  const hero = cases.find(s => s.id === 'start-before-ready');
+  assert.equal(hero.original.title, 'Give me 104 seconds... I’ll DELETE your need to feel ready');
+  const original = provenance.find(item => item.case === hero.id && item.role === 'original');
+  assert.ok(original.sourcePath.endsWith('/channel-dGCgbkmr69k.jpg'));
+  assert.equal(original.sourceSha256, '53ab33b6e03ce1fdeccde4e6be29056077544f4a65adbf16fc6862417d6ec7e5');
+  assert.deepEqual(original.webSize, [480, 270]);
+  assert.ok(hero.variants[0].annotationPath);
 });

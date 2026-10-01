@@ -2,23 +2,23 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { cases } from '../src/cases.mjs';
 
-const expectedOrder = ['tampa-future', 'starting-over', 'two-countries', 'first-car', 'seven-platforms', 'canadian-resume'];
+const expectedOrder = ['start-before-ready', 'cost-of-overtime', 'halloween-at-home', 'autumn-colour-plan', 'florida-seed-starts', 'tampa-future', 'starting-over', 'two-countries', 'first-car', 'seven-platforms', 'canadian-resume'];
 
-test('Working Wall home leads with Tampa original/A and the selected card order', async ({ page }) => {
-  const tampa = cases.find(study => study.id === 'tampa-future');
+test('Working Wall home leads with Kyle original/A and the selected English cards', async ({ page }) => {
+  const hero = cases.find(study => study.id === 'start-before-ready');
   await page.goto('./');
   await expect(page.locator('#hero-title')).toHaveText('GOOD VIDEO.EASY TO MISS.');
   await expect(page.locator('.hero-pitch')).toContainText('We study the video');
   await expect(page.locator('.featured-grid .work-card')).toHaveCount(3);
-  await expect(page.locator('.hero-comparison .paired-title')).toHaveText([tampa.original.title, tampa.variants[0].title]);
-  await expect(page.locator('.hero-comparison img').nth(0)).toHaveAttribute('src', tampa.original.image);
-  await expect(page.locator('.hero-comparison img').nth(1)).toHaveAttribute('src', tampa.variants[0].image);
+  await expect(page.locator('.hero-comparison .paired-title')).toHaveText([hero.original.title, hero.variants[0].title]);
+  await expect(page.locator('.hero-comparison img').nth(0)).toHaveAttribute('src', hero.original.image);
+  await expect(page.locator('.hero-comparison img').nth(1)).toHaveAttribute('src', hero.variants[0].image);
   await expect(page.locator('.case-caveat, .work-disclosure, .concept-status, .title-note')).toHaveCount(0);
-  await expect(page.locator('.concept-annotation')).toContainText(tampa.variants[0].annotation);
-  await expect(page.getByRole('link', { name: 'View the full case' })).toHaveAttribute('href', './work/tampa-future/');
-  await expect(page.locator('.featured-grid h3')).toHaveText(['What I would change', 'Brazil and US tax support', 'First-car costs']);
+  await expect(page.locator('.concept-annotation')).toContainText(hero.variants[0].annotation);
+  await expect(page.getByRole('link', { name: 'View the full case' })).toHaveAttribute('href', './work/start-before-ready/');
+  await expect(page.locator('.featured-grid h3')).toHaveText(['The cost of one more shift', 'When Halloween takes over', 'A wardrobe that feels like you']);
   expect(await page.locator('.featured-grid .work-card-link').evaluateAll(links => links.map(link => link.getAttribute('href')))).toEqual(expectedOrder.slice(1, 4).map(id => './work/' + id + '/'));
-  expect(await page.locator('.featured-grid img').evaluateAll(images => images.map(img => img.getAttribute('src')))).toEqual(expectedOrder.slice(1, 4).map(id => './assets/cases/' + id + '/a.webp'));
+  expect(await page.locator('.featured-grid img').evaluateAll(images => images.map(img => img.getAttribute('src')))).toEqual(['./assets/cases/cost-of-overtime/a.webp', './assets/cases/halloween-at-home/b.webp', './assets/cases/autumn-colour-plan/b.webp']);
   await expect(page.locator('.hero-comparison .audit-arrow')).toHaveCount(3);
   await expect(page.locator('.hero-comparison .original-issues li')).toHaveCount(3);
   await expect(page.locator('.header-contact')).toBeVisible();
@@ -27,15 +27,17 @@ test('Working Wall home leads with Tampa original/A and the selected card order'
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
 });
 
-test('all six direct cases retain all 24 source-bound pairs without disclaimer notices', async ({ page }, testInfo) => {
+test('all eleven direct cases retain all 44 source-bound pairs without disclaimer notices', async ({ page }, testInfo) => {
   const failed = [];
   page.on('response', response => { if (response.status() >= 400) failed.push(response.url()); });
   for (const study of cases) {
     await page.goto('work/' + study.id + '/');
     await expect(page.locator('.paired-title')).toHaveText([study.original.title, ...study.variants.map(v => v.title)]);
     await expect(page.locator('.pair-card')).toHaveCount(4);
+    const expectedLanguages = [study.language ?? (study.original.note ? 'en' : 'pt-BR'), ...study.variants.map(() => study.language ?? 'pt-BR')];
+    expect(await page.locator('.paired-title').evaluateAll(titles => titles.map(title => title.lang))).toEqual(expectedLanguages);
     const position = expectedOrder.indexOf(study.id);
-    await expect(page.locator('.case-intro .eyebrow')).toContainText(String(position + 1).padStart(2, '0') + ' / 06');
+    await expect(page.locator('.case-intro .eyebrow')).toContainText(String(position + 1).padStart(2, '0') + ' / 11');
     await expect(page.locator('.case-next a').last()).toHaveAttribute('href', '../' + expectedOrder[(position + 1) % expectedOrder.length] + '/');
     await expect(page.locator('.audit-arrow')).toHaveCount(3);
     await expect(page.locator('.audit-number')).toHaveText(['1', '2', '3']);
@@ -62,7 +64,7 @@ test('all six direct cases retain all 24 source-bound pairs without disclaimer n
 
 test('archive search, topic, empty state and return filters work', async ({ page }) => {
   await page.goto('work/');
-  await expect(page.locator('.work-card:visible')).toHaveCount(6);
+  await expect(page.locator('.work-card:visible')).toHaveCount(11);
   expect(await page.locator('.archive-grid .work-card-link').evaluateAll(links => links.map(link => link.href))).toEqual(expectedOrder.map(id => new URL(id + '/', page.url()).href));
   await page.getByLabel('Search the work').fill('resume');
   await expect(page.locator('.work-card:visible')).toHaveCount(1);
@@ -78,7 +80,7 @@ test('archive search, topic, empty state and return filters work', async ({ page
   await page.getByLabel('Search the work').fill('zz-no-match');
   await expect(page.getByRole('heading', { name: 'No matching cases.' })).toBeVisible();
   await page.getByRole('button', { name: 'Show all cases', exact: true }).click();
-  await expect(page.locator('.work-card:visible')).toHaveCount(6);
+  await expect(page.locator('.work-card:visible')).toHaveCount(11);
   await expect(page.getByLabel('Search the work')).toBeFocused();
 });
 
@@ -96,7 +98,7 @@ test('archive reveal control handles a large fixture without publishing fake wor
   await expect(page.locator('.work-card:visible')).toHaveCount(24);
   await expect(page.locator('.work-card').nth(12).locator('a')).toBeFocused();
   await page.getByRole('button', { name: 'Show more cases' }).click();
-  await expect(page.locator('.work-card:visible')).toHaveCount(26);
+  await expect(page.locator('.work-card:visible')).toHaveCount(cases.length + 20);
   await expect(page.getByRole('button', { name: 'Show more cases' })).toBeHidden();
 });
 
@@ -109,7 +111,7 @@ test('keyboard navigation and reduced motion work', async ({ page }) => {
   await expect(page.locator('#main')).toBeFocused();
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
   await page.getByRole('link', { name: 'View the full case' }).click();
-  await expect(page).toHaveURL(/work\/tampa-future\/$/);
+  await expect(page).toHaveURL(/work\/start-before-ready\/$/);
   await page.getByRole('link', { name: 'Concept C', exact: true }).click();
   await expect(page.locator('#concept-c')).toBeInViewport();
 });
@@ -156,7 +158,7 @@ test('all work and case details remain accessible without JavaScript', async ({ 
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4191/youtube-packaging-case-studies/work/');
-  await expect(page.locator('.work-card:visible')).toHaveCount(6);
+  await expect(page.locator('.work-card:visible')).toHaveCount(11);
   await expect(page.locator('.archive-controls')).toBeHidden();
   await page.locator('.work-card a').first().click();
   await expect(page.locator('.pair-card')).toHaveCount(4);
