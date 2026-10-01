@@ -184,10 +184,18 @@ test('redesign wall moves right, left, right and pauses with sourced packaging n
   await expect(wall.locator('a, button')).toHaveCount(2);
   await expect(wall.locator('.thumbnail-rows')).toHaveAttribute('aria-hidden', 'true');
   await expect(page.locator('.packaging-notes')).toContainText('A useful starting point, not a fixed formula.');
-  await expect(page.locator('.expert-notes a').first()).toHaveAttribute('target', '_blank');
-  expect(await page.locator('.expert-notes a').evaluateAll(links => links.map(link => link.href))).toEqual([
-    'https://podcast.creatorscience.com/paddy-galloway-2/', 'https://www.trechmedia.com/'
+  await expect(page.locator('.expert-notes a')).toHaveCount(0);
+  await expect(page.locator('.expert-notes blockquote')).toHaveText([
+    '“I often actually say that it’s 50% of the game.”',
+    '“We’re making a thumbnail, we’re not making an art piece.”'
   ]);
+  expect(await page.locator('.expert-notes img').evaluateAll(images => images.map(img => img.getAttribute('src')))).toEqual([
+    'assets/experts/paddy-galloway.jpg', 'assets/experts/jacob-bryant.jpg'
+  ]);
+  await page.locator('.expert-notes').scrollIntoViewIfNeeded();
+  await page.locator('.expert-notes img').evaluateAll(images => Promise.all(images.map(img => img.decode())));
+  const duration = await wall.locator('.thumbnail-track').first().evaluate(el => parseFloat(getComputedStyle(el).animationDuration));
+  expect((page.viewportSize().width <= 740 ? 12 : 15) / duration).toBeCloseTo(0.7, 5);
   await wall.scrollIntoViewIfNeeded();
   await expect(wall).toHaveAttribute('data-motion', 'running');
   await expect(wall.locator('img').first()).toHaveJSProperty('complete', true);
