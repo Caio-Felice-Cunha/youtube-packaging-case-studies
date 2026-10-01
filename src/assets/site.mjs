@@ -80,6 +80,30 @@ function enhanceCaseLinks() {
   }
 }
 
+function enhanceThumbnailWall() {
+  const wall = document.querySelector('.thumbnail-wall');
+  const toggle = wall?.querySelector('.motion-toggle');
+  if (!(wall instanceof HTMLElement) || !(toggle instanceof HTMLButtonElement)) return;
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = false;
+  let inView = false;
+  const update = () => {
+    wall.dataset.motion = paused || reducedMotion.matches || !inView ? 'paused' : 'running';
+    toggle.textContent = paused ? 'Resume motion' : 'Pause motion';
+    toggle.hidden = reducedMotion.matches;
+  };
+  toggle.addEventListener('click', () => { paused = !paused; update(); });
+  reducedMotion.addEventListener('change', update);
+  new IntersectionObserver(entries => {
+    inView = entries.some(entry => entry.isIntersecting);
+    if (inView) {
+      for (const img of Array.from(wall.querySelectorAll('img'))) img.loading = 'eager';
+    }
+    update();
+  }, { rootMargin: '300px' }).observe(wall);
+  update();
+}
+
 if (typeof document !== 'undefined') {
   const legacy = document.querySelector('#legacy-cases');
   const fragment = location.hash.slice(1);
@@ -88,5 +112,6 @@ if (typeof document !== 'undefined') {
   } else {
     enhanceArchive();
     enhanceCaseLinks();
+    enhanceThumbnailWall();
   }
 }

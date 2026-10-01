@@ -111,6 +111,8 @@ test('keyboard navigation and reduced motion work', async ({ page }) => {
   await page.keyboard.press('Enter');
   await expect(page.locator('#main')).toBeFocused();
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
+  await expect(page.locator('.thumbnail-track').first()).toHaveCSS('animation-name', 'none');
+  await expect(page.locator('.motion-toggle')).toBeHidden();
   await page.getByRole('link', { name: 'View the full case' }).click();
   await expect(page).toHaveURL(/work\/start-before-ready\/$/);
   await page.getByRole('link', { name: 'Concept C', exact: true }).click();
@@ -127,7 +129,7 @@ test('home, archive and each detail have no automated accessibility violations',
     expect(await page.evaluate(() => document.documentElement.scrollWidth), route).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
   }
   await page.goto('./');
-  for (const img of await page.locator('img').all()) { await img.scrollIntoViewIfNeeded(); await img.evaluate(el => el.decode()); }
+  for (const img of await page.locator('img:not(.thumbnail-wall img)').all()) { await img.scrollIntoViewIfNeeded(); await img.evaluate(el => el.decode()); }
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   await page.screenshot({ path: testInfo.outputPath('home.png'), fullPage: true });
   await page.goto('work/');
@@ -159,10 +161,64 @@ test('one build serves root and project paths, including directory redirects and
 test('all work and case details remain accessible without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
+  await page.goto('http://127.0.0.1:4191/youtube-packaging-case-studies/');
+  await expect(page.locator('.motion-toggle')).toBeHidden();
+  await expect(page.locator('.thumbnail-track').first()).toHaveCSS('animation-play-state', 'paused');
+  await expect(page.locator('#packaging-title')).toBeVisible();
   await page.goto('http://127.0.0.1:4191/youtube-packaging-case-studies/work/');
   await expect(page.locator('.work-card:visible')).toHaveCount(11);
   await expect(page.locator('.archive-controls')).toBeHidden();
   await page.locator('.work-card a').first().click();
   await expect(page.locator('.pair-card')).toHaveCount(4);
   await context.close();
+});
+
+test('redesign wall moves right, right, left and pauses with sourced packaging notes', async ({ page }, testInfo) => {
+  await page.goto('./');
+  const wall = page.locator('.thumbnail-wall');
+  await expect(wall.locator('.thumbnail-row')).toHaveCount(3);
+  const redesigns = new Set(cases.flatMap(study => study.variants.map(v => v.image)));
+  const sources = await wall.locator('img').evaluateAll(images => images.map(img => img.getAttribute('src')));
+  expect(sources.length).toBe(66);
+  expect(new Set(sources)).toEqual(redesigns);
+  await expect(wall.locator('a, button')).toHaveCount(2);
+  await expect(wall.locator('.thumbnail-rows')).toHaveAttribute('aria-hidden', 'true');
+  await expect(page.locator('.packaging-notes')).toContainText('A useful starting point, not a fixed formula.');
+  await expect(page.locator('.expert-notes a').first()).toHaveAttribute('target', '_blank');
+  expect(await page.locator('.expert-notes a').evaluateAll(links => links.map(link => link.href))).toEqual([
+    'https://podcast.creatorscience.com/paddy-galloway-2/', 'https://www.trechmedia.com/'
+  ]);
+  await wall.scrollIntoViewIfNeeded();
+  await expect(wall).toHaveAttribute('data-motion', 'running');
+  await expect(wall.locator('img').first()).toHaveJSProperty('complete', true);
+  const directions = await wall.locator('.thumbnail-track').evaluateAll(tracks => tracks.map(track => {
+    const animation = track.getAnimations()[0];
+    animation.currentTime = 1000;
+    const before = new DOMMatrix(getComputedStyle(track).transform).m41;
+    animation.currentTime = 1250;
+    const after = new DOMMatrix(getComputedStyle(track).transform).m41;
+    return Math.sign(after - before);
+  }));
+  expect(directions).toEqual([1, 1, -1]);
+  const toggle = page.getByRole('button', { name: 'Pause motion' });
+  await toggle.focus();
+  await page.keyboard.press('Enter');
+  await expect(wall).toHaveAttribute('data-motion', 'paused');
+  const track = wall.locator('.thumbnail-track').first();
+  await expect(track).toHaveCSS('animation-play-state', 'paused');
+  const position = await track.evaluate(el => getComputedStyle(el).transform);
+  await page.waitForTimeout(150);
+  await expect(track).toHaveCSS('transform', position);
+  await page.keyboard.press('Enter');
+  await expect(wall).toHaveAttribute('data-motion', 'running');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(track).toHaveCSS('animation-name', 'none');
+  await expect(page.getByRole('button', { name: /motion/ })).toBeHidden();
+  await expect(wall).toHaveAttribute('data-motion', 'paused');
+  const gap = await page.evaluate(() => document.querySelector('.site-footer').getBoundingClientRect().top - document.querySelector('.thumbnail-wall').getBoundingClientRect().bottom);
+  expect(Math.abs(gap)).toBeLessThan(1);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
+  await wall.locator('img').evaluateAll(images => Promise.all(images.map(img => img.decode())));
+  await wall.screenshot({ path: testInfo.outputPath('thumbnail-wall.png') });
+  await page.locator('.packaging-notes').screenshot({ path: testInfo.outputPath('packaging-notes.png') });
 });
