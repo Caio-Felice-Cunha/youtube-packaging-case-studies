@@ -190,12 +190,15 @@ test('redesign wall moves right, left, right and pauses with sourced packaging n
     '“The difference between 10,000 views and 100,000 views.”'
   ]);
   expect(await page.locator('.expert-notes img').evaluateAll(images => images.map(img => img.getAttribute('src')))).toEqual([
-    'assets/experts/paddy-galloway.jpg', 'assets/experts/jacob-bryant.jpg'
+    'assets/experts/paddy-galloway-white.jpg', 'assets/experts/jacob-bryant-engaged.jpg'
   ]);
   await page.locator('.expert-notes').scrollIntoViewIfNeeded();
   await page.locator('.expert-notes img').evaluateAll(images => Promise.all(images.map(img => img.decode())));
-  const duration = await wall.locator('.thumbnail-track').first().evaluate(el => parseFloat(getComputedStyle(el).animationDuration));
-  expect((page.viewportSize().width <= 740 ? 12 : 15) / duration).toBeCloseTo(0.7, 5);
+  const durations = await wall.locator('.thumbnail-track').evaluateAll(tracks => tracks.map(el => parseFloat(getComputedStyle(el).animationDuration)));
+  const previousDuration = page.viewportSize().width <= 740 ? 17.142857 : 21.428571;
+  for (const [row, speed] of [0.9, 0.6, 0.8].entries()) {
+    expect(previousDuration / durations[row]).toBeCloseTo(speed, 5);
+  }
   await wall.scrollIntoViewIfNeeded();
   await expect(wall).toHaveAttribute('data-motion', 'running');
   await expect(wall.locator('img').first()).toHaveJSProperty('complete', true);

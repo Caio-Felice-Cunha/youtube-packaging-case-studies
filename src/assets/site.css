@@ -163,7 +163,10 @@ figure { margin: 0; }
 .motion-toggle { min-height: 44px; min-width: 124px; border: 1px solid #73767c; padding: 10px 14px; color: white; background: transparent; }
 .thumbnail-wall :is(a, button):focus-visible { outline-color: white; }
 .thumbnail-rows { overflow: hidden; display: grid; gap: var(--tile-gap); }
-.thumbnail-track { display: flex; width: max-content; animation: thumbnail-travel 21.428571s linear infinite; animation-play-state: paused; }
+.thumbnail-row { --wall-cycle: 21.428571s; --row-speed: .9; }
+.thumbnail-row:nth-child(2) { --row-speed: .6; }
+.thumbnail-row:nth-child(3) { --row-speed: .8; }
+.thumbnail-track { display: flex; width: max-content; animation: thumbnail-travel calc(var(--wall-cycle) / var(--row-speed)) linear infinite; animation-play-state: paused; }
 .thumbnail-group { display: flex; gap: var(--tile-gap); padding-right: var(--tile-gap); flex-shrink: 0; }
 .thumbnail-group img { width: var(--tile-width); height: auto; aspect-ratio: 16 / 9; max-width: none; object-fit: contain; background: #2e3034; }
 .thumbnail-row[data-direction="right"] .thumbnail-track { animation-direction: reverse; }
@@ -235,7 +238,7 @@ figure { margin: 0; }
   .wall-heading { flex-direction: column; gap: 20px; margin-bottom: 22px; }
   .wall-heading h2 { font-size: 30px; }
   .wall-actions { flex-direction: row; align-items: center; justify-content: space-between; width: 100%; gap: 12px; font-size: 12px; }
-  .thumbnail-track { animation-duration: 17.142857s; }
+  .thumbnail-row { --wall-cycle: 17.142857s; }
   .site-footer { padding-top: 40px; }
   .contact-block { flex-direction: column; gap: 26px; padding-bottom: 36px; }
   .contact-block h2 { font-size: 42px; }
