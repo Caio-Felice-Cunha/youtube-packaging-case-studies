@@ -72,7 +72,7 @@ function renderThumbnailWall(studies) {
     const offset = row * 2;
     const ordered = [...selection.slice(offset), ...selection.slice(0, offset)];
     const tiles = ordered.map(study => `<img src="${e(study.variants[row].image)}" alt="" width="1280" height="720" loading="lazy" decoding="async">`).join('');
-    return `<div class="thumbnail-row" data-direction="${row < 2 ? 'right' : 'left'}"><div class="thumbnail-track"><div class="thumbnail-group">${tiles}</div><div class="thumbnail-group">${tiles}</div></div></div>`;
+    return `<div class="thumbnail-row" data-direction="${row % 2 === 0 ? 'right' : 'left'}"><div class="thumbnail-track"><div class="thumbnail-group">${tiles}</div><div class="thumbnail-group">${tiles}</div></div></div>`;
   }).join('');
   return `<section class="thumbnail-wall" aria-labelledby="wall-title" data-motion="paused"><div class="wrap wall-heading"><div><p class="eyebrow">THE REDESIGNS</p><h2 id="wall-title">SMALL FRAME. BIG POSSIBILITIES.</h2></div><div class="wall-actions"><a href="./work/">Explore every case ${arrow}</a><button class="motion-toggle" type="button" aria-controls="thumbnail-rows" hidden>Pause motion</button></div></div><div id="thumbnail-rows" class="thumbnail-rows" aria-hidden="true">${rows}</div></section>`;
 }

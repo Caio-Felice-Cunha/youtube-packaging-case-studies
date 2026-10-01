@@ -173,7 +173,7 @@ test('all work and case details remain accessible without JavaScript', async ({ 
   await context.close();
 });
 
-test('redesign wall moves right, right, left and pauses with sourced packaging notes', async ({ page }, testInfo) => {
+test('redesign wall moves right, left, right and pauses with sourced packaging notes', async ({ page }, testInfo) => {
   await page.goto('./');
   const wall = page.locator('.thumbnail-wall');
   await expect(wall.locator('.thumbnail-row')).toHaveCount(3);
@@ -199,7 +199,7 @@ test('redesign wall moves right, right, left and pauses with sourced packaging n
     const after = new DOMMatrix(getComputedStyle(track).transform).m41;
     return Math.sign(after - before);
   }));
-  expect(directions).toEqual([1, 1, -1]);
+  expect(directions).toEqual([1, -1, 1]);
   const toggle = page.getByRole('button', { name: 'Pause motion' });
   await toggle.focus();
   await page.keyboard.press('Enter');
