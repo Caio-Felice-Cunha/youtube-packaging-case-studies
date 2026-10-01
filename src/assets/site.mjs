@@ -87,18 +87,39 @@ function enhanceThumbnailWall() {
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let paused = false;
   let inView = false;
+  let ready = false;
+  /** @type {Promise<void> | undefined} */
+  let loading;
+  wall.dataset.images = 'loading';
   const update = () => {
-    wall.dataset.motion = paused || reducedMotion.matches || !inView ? 'paused' : 'running';
+    wall.dataset.motion = !ready || paused || reducedMotion.matches || !inView ? 'paused' : 'running';
     toggle.textContent = paused ? 'Resume motion' : 'Pause motion';
     toggle.hidden = reducedMotion.matches;
+  };
+  const prepareImages = async () => {
+    const images = Array.from(wall.querySelectorAll('img'));
+    const results = await Promise.all(images.map(async img => {
+      img.loading = 'eager';
+      try { await img.decode(); return true; } catch { return false; }
+    }));
+    const failed = new Set(images.filter((_, index) => !results[index]).map(img => img.src));
+    for (const row of Array.from(wall.querySelectorAll('.thumbnail-row'))) {
+      const rowImages = Array.from(row.querySelectorAll('img'));
+      const fallback = rowImages.find(img => !failed.has(img.src));
+      if (!fallback) { row.remove(); continue; }
+      for (const img of rowImages) if (failed.has(img.src)) img.src = fallback.src;
+    }
+    await Promise.all(Array.from(wall.querySelectorAll('img')).map(img =>
+      img.decode().catch(() => img.closest('.thumbnail-row')?.remove())));
+    ready = true;
+    wall.dataset.images = 'ready';
+    update();
   };
   toggle.addEventListener('click', () => { paused = !paused; update(); });
   reducedMotion.addEventListener('change', update);
   new IntersectionObserver(entries => {
     inView = entries.some(entry => entry.isIntersecting);
-    if (inView) {
-      for (const img of Array.from(wall.querySelectorAll('img'))) img.loading = 'eager';
-    }
+    if (inView && !loading) loading = prepareImages();
     update();
   }, { rootMargin: '300px' }).observe(wall);
   update();

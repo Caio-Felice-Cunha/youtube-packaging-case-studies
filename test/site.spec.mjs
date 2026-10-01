@@ -4,6 +4,44 @@ import { cases } from '../src/cases.mjs';
 
 const expectedOrder = ['start-before-ready', 'cost-of-overtime', 'halloween-at-home', 'autumn-colour-plan', 'florida-seed-starts', 'tampa-future', 'starting-over', 'two-countries', 'first-car', 'seven-platforms', 'canadian-resume'];
 
+test('wall waits for slow images and replaces failed tiles in both loop copies', async ({ page }, testInfo) => {
+  const study = cases.find(item => item.id === 'canadian-resume');
+  const delayed = study.variants[2].image.replace(/^\.\//, '');
+  const failed = study.variants[1].image.replace(/^\.\//, '');
+  let release;
+  const pending = new Promise(resolve => { release = resolve; });
+  let requested = false;
+  await page.route(`**/${delayed}`, async route => {
+    requested = true;
+    await pending;
+    await route.continue();
+  });
+  await page.route(`**/${failed}`, route => route.abort());
+  await page.goto('./', { waitUntil: 'domcontentloaded' });
+  const wall = page.locator('.thumbnail-wall');
+  await wall.scrollIntoViewIfNeeded();
+  await expect.poll(() => requested).toBe(true);
+  await expect(wall).toHaveAttribute('data-images', 'loading');
+  await expect(wall).toHaveAttribute('data-motion', 'paused');
+  await expect(wall.locator('.thumbnail-rows')).toBeHidden();
+  await page.getByRole('button', { name: 'Pause motion' }).click();
+  release();
+  await expect(wall).toHaveAttribute('data-images', 'ready');
+  await expect(wall).toHaveAttribute('data-motion', 'paused');
+  await expect(wall.locator(`img[src$="${failed}"]`)).toHaveCount(0);
+  expect(await wall.locator('img').evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0))).toBe(true);
+  const groups = await wall.locator('.thumbnail-group').evaluateAll(items => items.map(group => [...group.querySelectorAll('img')].map(img => img.src)));
+  for (let row = 0; row < 3; row++) {
+    expect(groups[row * 2]).toHaveLength(cases.length);
+    expect(groups[row * 2]).toEqual(groups[row * 2 + 1]);
+  }
+  await wall.screenshot({ path: testInfo.outputPath('loaded-thumbnail-wall.png') });
+  await page.getByRole('button', { name: 'Resume motion' }).click();
+  await expect(wall).toHaveAttribute('data-motion', 'running');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(wall).toHaveAttribute('data-motion', 'paused');
+});
+
 test('Working Wall home leads with Kyle original/A and the selected English cards', async ({ page }) => {
   const hero = cases.find(study => study.id === 'start-before-ready');
   await page.goto('./');

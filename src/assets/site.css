@@ -163,6 +163,7 @@ figure { margin: 0; }
 .motion-toggle { min-height: 44px; min-width: 124px; border: 1px solid #73767c; padding: 10px 14px; color: white; background: transparent; }
 .thumbnail-wall :is(a, button):focus-visible { outline-color: white; }
 .thumbnail-rows { overflow: hidden; display: grid; gap: var(--tile-gap); }
+.thumbnail-wall[data-images="loading"] .thumbnail-rows { visibility: hidden; }
 .thumbnail-row { --wall-cycle: 21.428571s; --row-speed: .9; }
 .thumbnail-row:nth-child(2) { --row-speed: .6; }
 .thumbnail-row:nth-child(3) { --row-speed: .8; }
