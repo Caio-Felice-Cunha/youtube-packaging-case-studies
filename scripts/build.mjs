@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { publishedCases as cases, unpublishedCaseIds } from '../src/cases.mjs';
 import { workOrder } from '../src/presentation.mjs';
-import { renderHome, renderArchive, renderCase, renderHeader, renderFooter, escapeHtml } from './render.mjs';
+import { renderHome, renderArchive, renderCase, renderApplication, renderHeader, renderFooter, escapeHtml } from './render.mjs';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outputRoot = path.join(projectRoot, 'dist');
@@ -31,7 +31,7 @@ async function writePage(route, title, description, content, page) {
   const values = { ROOT: root, TITLE: title, DESCRIPTION: description, CANONICAL: `https://thecontentoffice.studio/${route}`, PAGE: page };
   const html = template.replace(/\{\{(ROOT|TITLE|DESCRIPTION|CANONICAL|PAGE)\}\}/g, (_, key) => escapeHtml(values[/** @type {keyof typeof values} */ (key)]))
     .replace('<!-- HEADER -->', renderHeader(root, page))
-    .replace('<!-- FOOTER -->', renderFooter(root))
+    .replace('<!-- FOOTER -->', renderFooter(root, page === 'apply'))
     .replace('<!-- CONTENT -->', content);
   if (html.includes('{{') || /<!-- (HEADER|FOOTER|CONTENT) -->/.test(html)) throw new Error('Unfilled document slot.');
   const dir = path.join(outputRoot, route);
@@ -41,6 +41,7 @@ async function writePage(route, title, description, content, page) {
 
 await writePage('', 'The Content Office — YouTube titles & thumbnails', 'Good video. Easy to miss. We study the video, find the strongest reason to watch, and build the title and thumbnail together.', renderHome(orderedCases), 'home');
 await writePage('work/', 'The work — The Content Office', 'Explore title and thumbnail concepts. Browse the original, three selected directions, and the thinking behind each change.', renderArchive(orderedCases), 'work');
+await writePage('apply/', 'Apply for your channel | The Content Office', 'Share your YouTube channel or video and email to apply for a channel review.', renderApplication(), 'apply');
 for (const [index, study] of orderedCases.entries()) {
   await writePage(`work/${study.id}/`, `${study.topic} — The Content Office`, study.whatChanged, renderCase(study, index, orderedCases), 'case');
 }

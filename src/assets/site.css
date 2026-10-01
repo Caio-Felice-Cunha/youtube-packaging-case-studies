@@ -12,6 +12,22 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 button, input, select { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button { cursor: pointer; }
+.application { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; padding-block: 76px 96px; align-items: start; }
+.application-intro h1 { font: 400 clamp(54px, 6.5vw, 98px)/1.04 Anton, Impact, sans-serif; letter-spacing: -.02em; margin-block: 20px 26px; }
+.application-intro > p:not(.eyebrow) { max-width: 440px; color: var(--muted); font-size: 19px; }
+.application-intro > a { display: inline-block; margin-top: 24px; }
+.application-panel { padding: 32px; background: var(--white); border: 1px solid var(--line); }
+.application-panel h2 { margin-block: 12px 30px; font-size: 28px; letter-spacing: -.025em; }
+.application-field { margin-bottom: 24px; }
+.application-field label { display: block; font-weight: 700; font-size: 17px; }
+.application-field p { margin-block: 5px 12px; color: var(--muted); font-size: 14px; }
+.application-field input { display: block; width: 100%; min-width: 0; min-height: 54px; border: 1px solid #a7a8a9; padding: 12px 14px; color: var(--ink); background: white; border-radius: 0; }
+.application-field input::placeholder { color: #62656a; opacity: 1; }
+.application-form .button { width: 100%; }
+.application-privacy { margin-top: 16px; font-size: 12px; color: var(--muted); }
+.form-honeypot { display: none; }
+@media (max-width: 900px) { .application { grid-template-columns: 1fr; gap: 36px; padding-block: 42px 60px; } .application-intro h1 { font-size: clamp(42px, 12vw, 70px); } .application-panel { padding: 24px; } }
+@media (max-width: 400px) { .application-panel { padding: 18px; } }
 img, svg { display: block; max-width: 100%; }
 h1, h2, h3, p { margin: 0; }
 h1, h2, h3 { text-wrap: balance; }

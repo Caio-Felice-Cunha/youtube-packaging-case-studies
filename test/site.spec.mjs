@@ -62,7 +62,8 @@ test('Working Wall home leads with Miller original/B and Urban Harvest replaces 
   await expect(page.locator('.hero-comparison .audit-arrow')).toHaveCount(3);
   await expect(page.locator('.hero-comparison .original-issues li')).toHaveCount(3);
   await expect(page.locator('.header-contact')).toBeVisible();
-  await expect(page.locator('.header-contact')).toHaveAttribute('href', 'mailto:caiofcunha@hotmail.com');
+  await expect(page.locator('.header-contact')).toHaveAttribute('href', './apply/');
+  await expect(page.locator('.header-contact')).toContainText('Apply for your channel');
   await expect(page.locator('.hero-comparison .original')).not.toContainText('Independent concept');
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
 });
@@ -160,10 +161,10 @@ test('keyboard navigation and reduced motion work', async ({ page }) => {
 });
 
 test('home, archive and each detail have no automated accessibility violations', async ({ page }, testInfo) => {
-  for (const route of ['./', 'work/', ...cases.map(s => 'work/' + s.id + '/')]) {
+  for (const route of ['./', 'work/', 'apply/', ...cases.map(s => 'work/' + s.id + '/')]) {
     await page.goto(route);
     await expect(page.locator('body')).not.toContainText(/independent concept|independent portfolio|not (?:uploaded|live-tested|verified|confirmed)|not proof of|not measured|not creator-endorsed|likeness has not|no performance result|guaranteed outcome|job guarantee|provisional concept|selected evaluation concepts/i);
-    await expect(page.locator('.portfolio-notice')).toHaveCount(route === './' || route === 'work/' ? 0 : 1);
+    await expect(page.locator('.portfolio-notice')).toHaveCount(route === './' || route === 'work/' || route === 'apply/' ? 0 : 1);
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations, route).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth), route).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
@@ -181,7 +182,7 @@ test('home, archive and each detail have no automated accessibility violations',
 test('one build serves root and project paths, including directory redirects and legacy links', async ({ page, request }) => {
   const origin = 'http://127.0.0.1:4191';
   for (const mount of ['/', '/youtube-packaging-case-studies/']) {
-    for (const route of ['', 'work/', ...cases.map(s => 'work/' + s.id + '/')]) {
+    for (const route of ['', 'work/', 'apply/', ...cases.map(s => 'work/' + s.id + '/')]) {
       const response = await page.goto(origin + mount + route);
       expect(response.status()).toBe(200);
       await expect(page.locator('h1')).toHaveCount(1);
@@ -214,7 +215,50 @@ test('all work and case details remain accessible without JavaScript', async ({ 
   await expect(page.locator('.archive-controls')).toBeHidden();
   await page.locator('.work-card a').first().click();
   await expect(page.locator('.pair-card')).toHaveCount(4);
+  await page.goto('http://127.0.0.1:4191/youtube-packaging-case-studies/apply/');
+  await expect(page.locator('.application-form')).toHaveAttribute('action', 'https://formsubmit.co/caiofcunha@hotmail.com');
+  await expect(page.locator('.application-form input:visible')).toHaveCount(2);
   await context.close();
+});
+
+test('channel application validates two fields and posts links or names without emailing during tests', async ({ page }, testInfo) => {
+  const submissions = [];
+  await page.route('https://formsubmit.co/caiofcunha@hotmail.com', async route => {
+    submissions.push(new URLSearchParams(route.request().postData()));
+    await route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><html lang="en"><title>Test response</title><h1>Test submission intercepted</h1></html>' });
+  });
+  await page.goto('./');
+  await page.locator('.header-contact').click();
+  await expect(page).toHaveURL(/\/apply\/$/);
+  await expect(page.locator('.application-form input:visible')).toHaveCount(2);
+  const channel = page.getByLabel('YouTube channel or video', { exact: true });
+  const email = page.getByLabel('Your email', { exact: true });
+  await page.getByRole('button', { name: 'Submit application' }).click();
+  await expect(channel).toBeFocused();
+  await channel.fill('   ');
+  await email.fill('test@example.com');
+  await page.getByRole('button', { name: 'Submit application' }).click();
+  expect(await channel.evaluate(el => el.validity.patternMismatch)).toBe(true);
+  await channel.fill('Miller Family Vibes');
+  await email.fill('invalid-email');
+  await page.getByRole('button', { name: 'Submit application' }).click();
+  expect(await email.evaluate(el => el.validity.typeMismatch)).toBe(true);
+  expect(submissions).toHaveLength(0);
+  await email.fill('test@example.com');
+  await page.screenshot({ path: testInfo.outputPath('application.png'), fullPage: true });
+  for (const value of ['https://youtube.com/@MillerFamilyVibes', 'https://youtube.com/watch?v=ttuye8C0Uss', 'Miller Family Vibes', 'NEW 2026 Halloween Decorate With Me!']) {
+    await page.goto('apply/');
+    await channel.fill(value);
+    await email.fill('test@example.com');
+    await page.getByRole('button', { name: 'Submit application' }).click();
+    await expect(page.getByRole('heading', { name: 'Test submission intercepted' })).toBeVisible();
+    const data = submissions.at(-1);
+    expect(data.get('channel_or_video')).toBe(value);
+    expect(data.get('email')).toBe('test@example.com');
+    expect(data.get('_subject')).toBe('Channel application | The Content Office');
+    expect(data.get('_captcha')).toBeNull();
+  }
+  expect(submissions).toHaveLength(4);
 });
 
 test('redesign wall moves right, left, right and pauses with sourced packaging notes', async ({ page }, testInfo) => {
