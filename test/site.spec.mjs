@@ -27,7 +27,7 @@ test('Working Wall home leads with Kyle original/A and the selected English card
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
 });
 
-test('all eleven direct cases retain all 44 source-bound pairs without disclaimer notices', async ({ page }, testInfo) => {
+test('all eleven direct cases retain their pairs and a discreet portfolio notice', async ({ page }, testInfo) => {
   const failed = [];
   page.on('response', response => { if (response.status() >= 400) failed.push(response.url()); });
   for (const study of cases) {
@@ -45,6 +45,7 @@ test('all eleven direct cases retain all 44 source-bound pairs without disclaime
     await expect(page.locator('.audit-line').first()).toHaveCSS('stroke', 'rgb(180, 35, 45)');
     await expect(page.locator('.video-link')).toHaveAttribute('href', study.videoUrl);
     await expect(page.locator('.case-caveat, .case-disclosure, .concept-status, .title-note')).toHaveCount(0);
+    await expect(page.locator('.case-next + .portfolio-notice')).toHaveText('This channel is not a client of The Content Office. This project is for portfolio purposes only.');
     const pairs = [study.original, ...study.variants];
     for (const [index, img] of (await page.locator('.pair-card img').all()).entries()) {
       await img.scrollIntoViewIfNeeded();
@@ -120,6 +121,7 @@ test('home, archive and each detail have no automated accessibility violations',
   for (const route of ['./', 'work/', ...cases.map(s => 'work/' + s.id + '/')]) {
     await page.goto(route);
     await expect(page.locator('body')).not.toContainText(/independent concept|independent portfolio|not (?:uploaded|live-tested|verified|confirmed)|not proof of|not measured|not creator-endorsed|likeness has not|no performance result|guaranteed outcome|job guarantee|provisional concept|selected evaluation concepts/i);
+    await expect(page.locator('.portfolio-notice')).toHaveCount(route === './' || route === 'work/' ? 0 : 1);
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations, route).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth), route).toBeLessThanOrEqual(await page.evaluate(() => innerWidth));
