@@ -58,7 +58,7 @@ export const englishCases = [
     why: 'Jason describes overtime helping clear roughly $128K of debt, then explains its effects on sleep and family life. The concepts each isolate one reason his priorities changed.',
     variants: [
       {
-        id: 'a', revision: 'A R20 / titles R17', title: 'Nurse Overtime Paid Off $128K Of Debt. Then I Stopped.',
+        id: 'a', revision: 'A R23 / titles R23', title: 'Nurse Overtime Paid Off $128K Of Debt. Then I Stopped.',
         image: './assets/cases/cost-of-overtime/a.webp',
         alt: 'Jason lies awake on a bed beside bundles of cash, with WHY STOP? across the lower edge.',
         angle: 'Success creates a question', annotation: 'money meets a stopping point',
@@ -66,7 +66,7 @@ export const englishCases = [
         reason: 'The title establishes the debt payoff; WHY STOP? opens the question the rest of Jason’s story answers.', arrowSide: 'left'
       },
       {
-        id: 'b', revision: 'B R22 / titles R17', title: 'What Nurse Overtime Was Really Costing Me',
+        id: 'b', revision: 'B R22 / titles R23', title: 'What Nurse Overtime Was Really Costing Me',
         image: './assets/cases/cost-of-overtime/b.webp',
         alt: 'Jason stands in scrubs at the center of a hospital corridor while blurred staff move around him.',
         angle: 'The person inside the workload', annotation: 'one still figure, a busy shift',
@@ -74,12 +74,12 @@ export const englishCases = [
         reason: 'The image establishes the work environment; the title opens the wider personal cost discussed in the video.', arrowSide: 'right'
       },
       {
-        id: 'c', revision: 'C R15 / titles R17', title: 'Becoming A Dad Changed What Overtime Was Worth',
+        id: 'c', revision: 'C R15 / titles R23', title: 'This Changed What Overtime Was Worth',
         image: './assets/cases/cost-of-overtime/c.webp',
         alt: 'Jason rests his head on folded scrubs at a nurses’ station, beside a small toy car.',
         angle: 'Time has another value', annotation: 'a small cue to family life',
         change: 'The tired face and toy car bring work and fatherhood into one composition.',
-        reason: 'Jason says being present for his son mattered more than reaching a financial target. The title gives the small family cue its meaning.', arrowSide: 'left'
+        reason: 'Jason says being present for his son mattered more than reaching a financial target. The broader title leaves the reason open; the toy car hints at the family priorities explained in the video.', arrowSide: 'left'
       }
     ]
   },
@@ -99,11 +99,11 @@ export const englishCases = [
     why: 'These are specific projects and decisions shown in Tricia’s video. Giving each its own frame makes the practical question easier to see.',
     variants: [
       {
-        id: 'a', revision: 'R03 A / titles R15', title: 'Can I Make My Fall Decor Work for Halloween?',
+        id: 'a', revision: 'A R16 / titles R15', title: 'Can I Make My Fall Decor Work for Halloween?',
         image: './assets/cases/halloween-at-home/a.webp',
         alt: 'Tricia points between autumn decorations and a glowing ghost, beneath Fall and howloween lettering linked by an arrow.',
         angle: 'Make the season change visible', annotation: 'fall decor becomes Halloween',
-        change: 'One large presenter connects two seasonal arrangements instead of appearing inside a collage.',
+        change: 'One large presenter connects two seasonal arrangements. The darker distant background brings her expression and the decorations forward.',
         reason: 'The title turns the decorating sequence into a question about reusing fall decor, a recurring choice in the video.', arrowSide: 'right'
       },
       {
@@ -137,7 +137,7 @@ export const englishCases = [
         { label: 'Many outfits, no clear choice', detail: 'Four fashion photos add separate focal points without showing which fabrics Ruan needs to bring together.', arrow: { origin: [440, 650], bend: [430, 600], target: [360, 540] } }
       ]
     },
-    whatChanged: 'The broad capsule-wardrobe question became three visible choices: prints versus basics, coordination versus personality, and the first three colours.',
+    whatChanged: 'The broad capsule-wardrobe question became three visible choices: prints versus basics, coordination versus personality, and choosing a starting palette.',
     why: 'This episode is the start of Ruan’s autumn plan. The designs bring her fabric decisions forward and connect a coherent wardrobe to the question of personal style.',
     variants: [
       {
@@ -157,11 +157,11 @@ export const englishCases = [
         reason: 'Ruan wants a more coherent wardrobe while keeping the patterns she enjoys. The title and question capture that tension.', arrowSide: 'left'
       },
       {
-        id: 'c', revision: 'R04 recording room C', title: 'Starting Over: The First Step in My Autumn Capsule',
+        id: 'c', revision: 'R05 C', title: 'Starting Over: The First Step In My Autumn Capsule',
         image: './assets/cases/autumn-colour-plan/c.webp',
-        alt: 'Ruan holds navy, olive and burgundy swatches beneath WHICH COLOURS?',
-        angle: 'Start with a concrete decision', annotation: 'three colours to build around',
-        change: 'Three swatches make the episode’s first planning step the central object.',
+        alt: 'Ruan considers navy, olive and burgundy textile panels behind her, with Which Colours? across the bottom.',
+        angle: 'Start with a concrete decision', annotation: 'the palette becomes the backdrop',
+        change: 'Three large textile panels frame a central, thoughtful presenter. The colour question sits across the bottom.',
         reason: 'Choosing the palette starts the capsule project. The title supplies that sequence while the thumbnail shows the decision at hand.', arrowSide: 'right'
       }
     ]
@@ -182,28 +182,28 @@ export const englishCases = [
     why: 'The video covers six seed starts and the uncertainty of Florida’s late winter. Each pair turns a point from that guide into a clear question.',
     variants: [
       {
-        id: 'a', revision: 'R09 A', title: 'Florida Can Still Freeze. Why Start These 6 Seeds In February?',
+        id: 'a', revision: 'R11 A', title: 'Florida Can Still Freeze. Why Start These 6 Seeds In February?',
         image: './assets/cases/florida-seed-starts/a.webp',
         alt: 'Elise stands between a frost-covered pot and a lush plant, labelled WINTER RISK and SPRING GOAL.',
         angle: 'Show the seasonal trade-off', annotation: 'the risk and the goal',
-        change: 'A risk-to-goal comparison gives February planting an immediate visual tension.',
+        change: 'A risk-to-goal comparison gives February planting an immediate visual tension. Stronger lettering keeps the seasonal labels readable.',
         reason: 'The title specifies Florida, six seeds and the freeze risk, linking the seasonal contrast to the practical guide.', arrowSide: 'right'
       },
       {
-        id: 'b', revision: 'R09 B', title: '6 Florida February Plants—Why Did One Cucumber Die?',
+        id: 'b', revision: 'R11 B-v2', title: '6 Florida February Plants—Why Did One Cucumber Die?',
         image: './assets/cases/florida-seed-starts/b.webp',
-        alt: 'Elise reacts beside a large wilted cucumber plant, with NO WAY and an arrow pointing at a damaged leaf.',
+        alt: 'Elise faces the viewer beside a large dry vine, with AVOID THIS and an arrow pointing at the damaged plant.',
         angle: 'Lead with a concrete setback', annotation: 'one failed plant opens the guide',
-        change: 'A damaged leaf replaces the seed packet as the main object, with the presenter’s reaction beside it.',
+        change: 'A large dry vine, a direct look at the viewer and AVOID THIS bring the setback into focus.',
         reason: 'The cucumber failure is a specific moment in the video. The title preserves the wider six-plant guide around that question.', arrowSide: 'left'
       },
       {
-        id: 'c', revision: 'R10 C', title: 'Would You Risk Starting Plant #5 In Florida This February?',
+        id: 'c', revision: 'R11 C', title: 'Would You Risk Starting Plant #5 In Florida This February?',
         image: './assets/cases/florida-seed-starts/c.webp',
-        alt: 'Elise holds the plant labelled #5 in front of four numbered background plants, with I HOPE IT WORKS above.',
-        angle: 'Single out one uncertain choice', annotation: 'one plant gets the attention',
-        change: 'A foreground plant and its number establish a focal point against the other starts.',
-        reason: 'The title supplies the place and timing, while the image isolates one choice within the video’s planting list.', arrowSide: 'right'
+        alt: 'Elise stands centrally over five numbered plant panels, partly covering the middle panel, with DO THIS across the bottom.',
+        angle: 'Single out one uncertain choice', annotation: 'five plants frame the decision',
+        change: 'Five numbered plant panels organize the guide around a central presenter and the short instruction DO THIS.',
+        reason: 'The title singles out plant number five and its timing risk. The panels place that question inside the wider planting guide.', arrowSide: 'right'
       }
     ]
   }

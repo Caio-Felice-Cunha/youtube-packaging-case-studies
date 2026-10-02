@@ -90,10 +90,14 @@ test('sensitive source notes and portfolio crossover stay out of public copy', (
 test('English pairs retain the exact captured titles, selected revisions and source bindings', () => {
   const selected = [
     ['start-before-ready', 'a', 'A-thumbnail-r05.jpg', '99c143c3aabd600df1e979ac8966fd001dcef69e96556fa348214a49dc9c6dc5'],
-    ['cost-of-overtime', 'a', 'A-r20.jpg', 'c12eb14ac438cc8330faa8afba15e4e59bd70a3054cf9bcb6d43293b0886a49d'],
+    ['cost-of-overtime', 'a', 'A-r23.jpg', 'b6f237a79ea7f9f70a797924e203b8fcdb1f325591f791f03b9484cb6cccb87c'],
+    ['halloween-at-home', 'a', 'A-final-background-r16.png', 'e75ece5159ddb3e87091cf132fa544fbbb6fa291049d44ed689aba2c60d5f20c'],
     ['halloween-at-home', 'b', 'B-final-r02.png', '5454575c0197810f807b5961129de848fce1659a83a0c51e01e5594c158f19e7'],
     ['autumn-colour-plan', 'b', 'B-recording-room-preview.jpg', 'f755190d1b51890237c8ca018c7823e3df3478d625096837534fa5f4f501a1e5'],
-    ['florida-seed-starts', 'b', 'B.png', '25d43cb0b2180b4d53284e2be31c76a3edd635abcdc4be6def2d877fdf605f37']
+    ['autumn-colour-plan', 'c', 'C-thumbnail-r05.jpg', '9518cb9e87f334c97c9d6a0f81db50b62ea7f5c0b291435d1af510008c4a9be0'],
+    ['florida-seed-starts', 'a', 'A.png', '1e0b8beb63424cf0e8e27dc40f2e052d90618b0e1f5384fcc75c3f7ec0ecf532'],
+    ['florida-seed-starts', 'c', 'C.png', 'e794a80edd9fb321cbccdf38ce727d5e1749ea30ec89a42b770cf27f48d22489'],
+    ['florida-seed-starts', 'b', 'B-v2.png', 'e9ba5543f27d14290403e20c02849edb22103f7adc097d3f9b4306aff81372a8']
   ];
   for (const [id, role, filename, digest] of selected) {
     const study = cases.find(s => s.id === id);
@@ -110,6 +114,8 @@ test('English pairs retain the exact captured titles, selected revisions and sou
     assert.equal(cover.sourceSha256, digest);
   }
   const hero = cases.find(s => s.id === 'start-before-ready');
+  assert.equal(cases.find(s => s.id === 'cost-of-overtime').variants[2].title, 'This Changed What Overtime Was Worth');
+  assert.equal(cases.find(s => s.id === 'autumn-colour-plan').variants[2].title, 'Starting Over: The First Step In My Autumn Capsule');
   assert.equal(hero.original.title, 'Give me 104 seconds... I’ll DELETE your need to feel ready');
   const original = provenance.find(item => item.case === hero.id && item.role === 'original');
   assert.ok(original.sourcePath.endsWith('/channel-dGCgbkmr69k.jpg'));

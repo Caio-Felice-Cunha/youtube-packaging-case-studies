@@ -515,28 +515,28 @@
   {
     "case": "cost-of-overtime",
     "role": "a",
-    "sourcePath": "agency-assets/projects/nurses-to-riches-Pma2Yg1vTfo/r01/exports/A-r20.jpg",
-    "sourceRevision": "A R20 / titles R17",
+    "sourcePath": "agency-assets/projects/nurses-to-riches-Pma2Yg1vTfo/r01/exports/A-r23.jpg",
+    "sourceRevision": "A R23 / titles R23",
     "pairedTitle": "Nurse Overtime Paid Off $128K Of Debt. Then I Stopped.",
-    "sourceSha256": "c12eb14ac438cc8330faa8afba15e4e59bd70a3054cf9bcb6d43293b0886a49d",
+    "sourceSha256": "b6f237a79ea7f9f70a797924e203b8fcdb1f325591f791f03b9484cb6cccb87c",
     "sourceSize": [
       1664,
       936
     ],
     "webPath": "src/assets/cases/cost-of-overtime/a.webp",
-    "webSha256": "94050aad1b5d3fc0f7be42573cbe3a9356ffd07cbcfb08153d32ca8abe7d228d",
+    "webSha256": "8f85f52ae78379df6825ff083c866296ce3f419b062e571390b3fa5b1dea998f",
     "webSize": [
       1280,
       720
     ],
-    "webBytes": 127172,
+    "webBytes": 123758,
     "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
   },
   {
     "case": "cost-of-overtime",
     "role": "b",
     "sourcePath": "agency-assets/projects/nurses-to-riches-Pma2Yg1vTfo/r01/exports/B-r22.jpg",
-    "sourceRevision": "B R22 / titles R17",
+    "sourceRevision": "B R22 / titles R23",
     "pairedTitle": "What Nurse Overtime Was Really Costing Me",
     "sourceSha256": "c29c23e452c71495601acbec6b5fd4a865568d62b45d6c6416c79162ff2d429f",
     "sourceSize": [
@@ -556,8 +556,8 @@
     "case": "cost-of-overtime",
     "role": "c",
     "sourcePath": "agency-assets/projects/nurses-to-riches-Pma2Yg1vTfo/r01/exports/C-r15.jpg",
-    "sourceRevision": "C R15 / titles R17",
-    "pairedTitle": "Becoming A Dad Changed What Overtime Was Worth",
+    "sourceRevision": "C R15 / titles R23",
+    "pairedTitle": "This Changed What Overtime Was Worth",
     "sourceSha256": "3a9a47a7c3bf9096c403791cbe4e5cbd83b0df9aba915becb6e455622abbd532",
     "sourceSize": [
       1664,
@@ -595,21 +595,21 @@
   {
     "case": "halloween-at-home",
     "role": "a",
-    "sourcePath": "agency-assets/projects/miller-halloween-2026/r03/A-final.png",
-    "sourceRevision": "R03 A / titles R15",
+    "sourcePath": "agency-assets/projects/miller-halloween-2026/r03/A-final-background-r16.png",
+    "sourceRevision": "A R16 / titles R15",
     "pairedTitle": "Can I Make My Fall Decor Work for Halloween?",
-    "sourceSha256": "c5ae25b68c3dedbebf3a19063206f4ce6afd3d80d700386173b529bdea1dfc9e",
+    "sourceSha256": "e75ece5159ddb3e87091cf132fa544fbbb6fa291049d44ed689aba2c60d5f20c",
     "sourceSize": [
       1280,
       720
     ],
     "webPath": "src/assets/cases/halloween-at-home/a.webp",
-    "webSha256": "a112c1e568a8f4b7633a2c67905bbf34fb0c994d66bdc53c92593c4cc46545ee",
+    "webSha256": "5a32dc5b1a871659eafa2bdb02686272fd70000e5c41ea0f1822623680448016",
     "webSize": [
       1280,
       720
     ],
-    "webBytes": 160088,
+    "webBytes": 151936,
     "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
   },
   {
@@ -715,21 +715,21 @@
   {
     "case": "autumn-colour-plan",
     "role": "c",
-    "sourcePath": "agency-assets/projects/yorkshiresewgirl-dsvzoeyi3rq-001/r04/background-previews/C-recording-room-preview.jpg",
-    "sourceRevision": "R04 recording room C",
-    "pairedTitle": "Starting Over: The First Step in My Autumn Capsule",
-    "sourceSha256": "204be09a01a5f9e0b1a66d561874374e476bcd99e48416600cc138a821806c63",
+    "sourcePath": "agency-assets/projects/yorkshiresewgirl-dsvzoeyi3rq-001/r05/final/C-thumbnail-r05.jpg",
+    "sourceRevision": "R05 C",
+    "pairedTitle": "Starting Over: The First Step In My Autumn Capsule",
+    "sourceSha256": "9518cb9e87f334c97c9d6a0f81db50b62ea7f5c0b291435d1af510008c4a9be0",
     "sourceSize": [
       1280,
       720
     ],
     "webPath": "src/assets/cases/autumn-colour-plan/c.webp",
-    "webSha256": "37dff901704f63ace01c3f53e2650338d3ca09403492dd007e272d32fb9ed52a",
+    "webSha256": "f7df2ec6d35240dc01dbb563e579ea5a9b8a5bcde94c4cf7ba92515eba190e92",
     "webSize": [
       1280,
       720
     ],
-    "webBytes": 98686,
+    "webBytes": 228042,
     "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
   },
   {
@@ -755,61 +755,61 @@
   {
     "case": "florida-seed-starts",
     "role": "a",
-    "sourcePath": "agency-assets/projects/urbanharvest-jtfzecdhtre/r09/A.png",
-    "sourceRevision": "R09 A",
+    "sourcePath": "agency-assets/projects/urbanharvest-jtfzecdhtre/r11/A.png",
+    "sourceRevision": "R11 A",
     "pairedTitle": "Florida Can Still Freeze. Why Start These 6 Seeds In February?",
-    "sourceSha256": "13aa29564ea691f05209b04c24f3e33ca3fbce22e02e10164f80e1db3ba321a4",
+    "sourceSha256": "1e0b8beb63424cf0e8e27dc40f2e052d90618b0e1f5384fcc75c3f7ec0ecf532",
     "sourceSize": [
       1280,
       720
     ],
     "webPath": "src/assets/cases/florida-seed-starts/a.webp",
-    "webSha256": "7e1afcc383e3e68b036ea6689814794c6e3133c2be7d1942c633458c5e0bdae5",
+    "webSha256": "0114d39906a0de3226553dc390a621ddf2724f825fbabac31e4b048b9d0d2ed1",
     "webSize": [
       1280,
       720
     ],
-    "webBytes": 145784,
+    "webBytes": 144362,
     "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
   },
   {
     "case": "florida-seed-starts",
     "role": "b",
-    "sourcePath": "agency-assets/projects/urbanharvest-jtfzecdhtre/r09/B.png",
-    "sourceRevision": "R09 B",
+    "sourcePath": "agency-assets/projects/urbanharvest-jtfzecdhtre/r11/B-v2.png",
+    "sourceRevision": "R11 B-v2",
     "pairedTitle": "6 Florida February Plants—Why Did One Cucumber Die?",
-    "sourceSha256": "25d43cb0b2180b4d53284e2be31c76a3edd635abcdc4be6def2d877fdf605f37",
+    "sourceSha256": "e9ba5543f27d14290403e20c02849edb22103f7adc097d3f9b4306aff81372a8",
     "sourceSize": [
       1280,
       720
     ],
     "webPath": "src/assets/cases/florida-seed-starts/b.webp",
-    "webSha256": "46b8fa12bb14c2d276e4b518ed6d9a726dece455c5a183d431d8e33ea74c6ded",
+    "webSha256": "fc13c94dfb581bed8d22e88b3aee09890c6900e2355ecbc3407125d45a145065",
     "webSize": [
       1280,
       720
     ],
-    "webBytes": 211684,
+    "webBytes": 184290,
     "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
   },
   {
     "case": "florida-seed-starts",
     "role": "c",
-    "sourcePath": "agency-assets/projects/urbanharvest-jtfzecdhtre/r10/C.png",
-    "sourceRevision": "R10 C",
+    "sourcePath": "agency-assets/projects/urbanharvest-jtfzecdhtre/r11/C.png",
+    "sourceRevision": "R11 C",
     "pairedTitle": "Would You Risk Starting Plant #5 In Florida This February?",
-    "sourceSha256": "7593e038bbb34f1da9316dd9d07cd89a0f350280ae79e7da6f798abd21acb561",
+    "sourceSha256": "e794a80edd9fb321cbccdf38ce727d5e1749ea30ec89a42b770cf27f48d22489",
     "sourceSize": [
       1280,
       720
     ],
     "webPath": "src/assets/cases/florida-seed-starts/c.webp",
-    "webSha256": "d8fc0230c11461b83a9ee8b36f0fab00598b47604b56a6666a2637db31262011",
+    "webSha256": "5ff366df7e2f6c7ec1d923eacf5654282a903b6a61cf6f5b24df031ae449eea9",
     "webSize": [
       1280,
       720
     ],
-    "webBytes": 167018,
+    "webBytes": 105300,
     "transform": "WebP quality 85, method 6; resize only, maximum 1280x720, no upscaling."
   }
 ]
